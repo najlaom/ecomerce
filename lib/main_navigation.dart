@@ -9,7 +9,7 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
   final items = <Widget>[Home(), Category(), Compte(), Aide()];
-  //test
+  //test  initi
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,4 +43,5 @@ class _MainNavigationState extends State<MainNavigation> {
       body: IndexedStack(index: _currentIndex, children: items),
     );
   }
+  //this
 }
