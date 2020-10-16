@@ -8,19 +8,15 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
-  final items = <Widget>[
-    Home(),
-    Category(),
-    Compte(),
-    Aide()
-  ];
+  final items = <Widget>[Home(), Category(), Compte(), Aide()];
+  //test
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
-        onTap: (index){
+        onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
@@ -44,11 +40,7 @@ class _MainNavigationState extends State<MainNavigation> {
           ),
         ],
       ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: items
-      ),
+      body: IndexedStack(index: _currentIndex, children: items),
     );
   }
-
 }
