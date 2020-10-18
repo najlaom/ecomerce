@@ -6,7 +6,7 @@ class CategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 50,
       alignment: Alignment.center,
       child: FlatButton(
         onPressed: () {},
@@ -14,9 +14,9 @@ class CategoryItem extends StatelessWidget {
           title,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 14.0,
+            fontSize: 11.0,
             fontFamily: 'JosefinSans',
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.bold,
             height: 1.5,
           ),
         ),
