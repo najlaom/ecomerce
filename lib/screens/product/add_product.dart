@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:ecomerce/components/assets.dart';
 import 'package:ecomerce/components/colors.dart';
 
-
-
 final priceTextStyle = TextStyle(
   color: Colors.grey.shade600,
   fontSize: 20.0,
@@ -122,7 +120,8 @@ class MyOrderPage extends StatelessWidget {
               ),
               const SizedBox(height: 10.0),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
                 child: RaisedButton(
                   padding: const EdgeInsets.all(16.0),
                   elevation: 0,
@@ -136,8 +135,7 @@ class MyOrderPage extends StatelessWidget {
                       fontSize: 18.0,
                     ),
                   ),
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                 ),
               ),
             ],
@@ -169,7 +167,6 @@ class OrderItem {
 }
 
 class OrderListItem extends StatelessWidget {
-
   final CategoryProduct product;
 
   const OrderListItem({Key key, this.product}) : super(key: key);
@@ -190,9 +187,9 @@ class OrderListItem extends StatelessWidget {
             ),
             child: product.image != null
                 ? Image.network(
-              product.image,
-              fit: BoxFit.cover,
-            )
+                    product.image,
+                    fit: BoxFit.cover,
+                  )
                 : null,
           ),
           const SizedBox(width: 20.0),

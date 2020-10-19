@@ -3,7 +3,7 @@ import 'package:ecomerce/widgets/network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Product extends StatefulWidget{
+class Product extends StatefulWidget {
   var prdList;
   Product({this.prdList});
   @override
@@ -38,44 +38,44 @@ class _ProductState extends State<Product> {
 
   @override
   Widget build(BuildContext context) {
-   return Container(
-     padding: EdgeInsets.only(left: 3.0),
-     height: 200,
-     child: GridView.count(
-         crossAxisCount: 3,
-       children: List.generate(this.widget.prdList.length, (index){
-         return GestureDetector(
-             onTap: () {},
-           child: Column(
-             children: [
-               Column(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   Container(
-                     color: Colors.red,
-                     //width: 200,
-                       child: (this.widget.prdList[index]['image']!= null)?
-                       Image.network(
-                         this.widget.prdList[index]['image'],
-                         width: 50,
-                         height: 50,
-                       ): null),
-                   SizedBox(
-                     height: 10,
-                   ),
-                   Container(
-                   alignment: Alignment.center,
-                     padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                     child: Text(this.widget.prdList[index]['name']),
-                   )
-
-                 ],
-               ),
-             ],
-           ),
-         );
-       }),
-     ),
-   );
+    return Container(
+      padding: EdgeInsets.only(left: 3.0),
+      height: 200,
+      child: GridView.count(
+        crossAxisCount: 3,
+        children: List.generate(this.widget.prdList.length, (index) {
+          return GestureDetector(
+            onTap: () {},
+            child: Column(
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        color: Colors.red,
+                        //width: 200,
+                        child: (this.widget.prdList[index]['image'] != null)
+                            ? Image.network(
+                                this.widget.prdList[index]['image'],
+                                width: 50,
+                                height: 50,
+                              )
+                            : null),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                      child: Text(this.widget.prdList[index]['name']),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          );
+        }),
+      ),
+    );
   }
 }

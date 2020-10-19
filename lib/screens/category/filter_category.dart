@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 
-
-
-class FilterCategory extends StatefulWidget{
+class FilterCategory extends StatefulWidget {
   @override
   _FilterCategoryState createState() => _FilterCategoryState();
 }
 
-class _FilterCategoryState extends State<FilterCategory>{
-  List<String> categories = ["Popularité","Nouveautés","Mieux Notés","Prix le plus bas","Prix le plus élevé"];
+class _FilterCategoryState extends State<FilterCategory> {
+  List<String> categories = [
+    "Popularité",
+    "Nouveautés",
+    "Mieux Notés",
+    "Prix le plus bas",
+    "Prix le plus élevé"
+  ];
   int selectIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -19,21 +23,20 @@ class _FilterCategoryState extends State<FilterCategory>{
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: categories.length,
-          itemBuilder: (context, index) =>
-              _buildCategory(index),
+          itemBuilder: (context, index) => _buildCategory(index),
         ),
       ),
     );
-
   }
-  Widget _buildCategory(int index){
+
+  Widget _buildCategory(int index) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         setState(() {
           selectIndex = index;
         });
       },
-      child:  Padding(
+      child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +45,7 @@ class _FilterCategoryState extends State<FilterCategory>{
                 categories[index],
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: selectIndex == index? Colors.white : Colors.white70,
+                  color: selectIndex == index ? Colors.white : Colors.white70,
                 ),
               ),
               Container(
@@ -52,9 +55,7 @@ class _FilterCategoryState extends State<FilterCategory>{
                 margin: EdgeInsets.only(top: 20.0 / 4),
               )
             ],
-          )
-      ),
+          )),
     );
-
   }
 }

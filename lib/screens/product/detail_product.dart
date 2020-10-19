@@ -29,10 +29,16 @@ class DetailsProduct extends StatelessWidget {
               _buildItemCard(context),
               Container(
                   padding: EdgeInsets.all(30.0),
-                  child: GrocerySubtitle(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras scelerisque nibh ut eros suscipit, vel cursus dolor imperdiet. Proin volutpat ligula eget purus maximus tristique. Pellentesque ullamcorper libero vitae metus feugiat fringilla. Ut luctus neque sed tortor placerat, faucibus mollis risus ullamcorper. Cras at nunc et odio ultrices tempor et.")),
-              Container(padding: EdgeInsets.only(left: 20.0, bottom: 10.0),child: GroceryTitle(text: "Related Items")),
-              GroceryListItemTwo(title: "Broccoli", image: brocoli, subtitle: "1 kg"),
-              GroceryListItemTwo(title: "Cabbage", image: cabbage, subtitle: "1 kg"),
+                  child: GrocerySubtitle(
+                      text:
+                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras scelerisque nibh ut eros suscipit, vel cursus dolor imperdiet. Proin volutpat ligula eget purus maximus tristique. Pellentesque ullamcorper libero vitae metus feugiat fringilla. Ut luctus neque sed tortor placerat, faucibus mollis risus ullamcorper. Cras at nunc et odio ultrices tempor et.")),
+              Container(
+                  padding: EdgeInsets.only(left: 20.0, bottom: 10.0),
+                  child: GroceryTitle(text: "Related Items")),
+              GroceryListItemTwo(
+                  title: "Broccoli", image: brocoli, subtitle: "1 kg"),
+              GroceryListItemTwo(
+                  title: "Cabbage", image: cabbage, subtitle: "1 kg"),
             ],
           ),
         ),
@@ -43,8 +49,8 @@ class DetailsProduct extends StatelessWidget {
                 color: Colors.green,
                 child: FlatButton(
                   color: Colors.green,
-                  onPressed: () => Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => MyOrderPage())),
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => MyOrderPage())),
                   child: Text("Add to Cart"),
                 ),
               ),
@@ -68,18 +74,25 @@ class DetailsProduct extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     IconButton(
-                      onPressed: (){},
+                      onPressed: () {},
                       icon: Icon(Icons.favorite_border),
                     )
                   ],
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  child: PNetworkImage(cabbage, height: 200,),
+                  child: PNetworkImage(
+                    cabbage,
+                    height: 200,
+                  ),
                 ),
-                SizedBox(height: 10.0,),
-                GroceryTitle(text:"Local Cabbage"),
-                SizedBox(height: 5.0,),
+                SizedBox(
+                  height: 10.0,
+                ),
+                GroceryTitle(text: "Local Cabbage"),
+                SizedBox(
+                  height: 5.0,
+                ),
                 GrocerySubtitle(text: "1 kg")
               ],
             ),

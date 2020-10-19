@@ -66,24 +66,28 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
-                   Row(
-                     children: [
-                       SizedBox(width: 35.0,),
-                       Container(
-                         padding: EdgeInsets.only(bottom: 20.0,left: 20.0, right: 20.0),
-                         width: 365,
-                         child: TextField(
-                           // controller: _textFieldController,
-                           decoration: InputDecoration(
-                             hintText: "Nom",
-                           ),
-                         ),
-                       ),
-                     ],
-                   ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 35.0,
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              bottom: 20.0, left: 20.0, right: 20.0),
+                          width: 365,
+                          child: TextField(
+                            // controller: _textFieldController,
+                            decoration: InputDecoration(
+                              hintText: "Nom",
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     Row(),
                     Container(
-                      padding: EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
+                      padding: EdgeInsets.only(
+                          bottom: 20.0, left: 20.0, right: 20.0),
                       width: 400,
                       child: TextField(
                         // controller: _textFieldController,
@@ -95,7 +99,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
+                      padding: EdgeInsets.only(
+                          bottom: 20.0, left: 20.0, right: 20.0),
                       width: 400,
                       child: TextField(
                         // controller: _textFieldController,
@@ -108,7 +113,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
+                      padding: EdgeInsets.only(
+                          bottom: 20.0, left: 20.0, right: 20.0),
                       width: 400,
                       child: IntlPhoneField(
                         decoration: InputDecoration(
@@ -117,7 +123,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         onChanged: (phone) {
                           print(phone.completeNumber);
                         },
-
                       ),
                     ),
                     Container(

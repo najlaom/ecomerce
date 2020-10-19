@@ -13,8 +13,6 @@ class ProductItem extends StatefulWidget {
 }
 
 class _ProductItemState extends State<ProductItem> {
-
-
   @override
   void initState() {
     super.initState();

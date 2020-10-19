@@ -38,7 +38,6 @@ class _CategoryItemState extends State<CategoryItem> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(

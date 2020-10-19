@@ -8,8 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecomerce/components/assets.dart';
 
-
-
 class ListProduct extends StatefulWidget {
   @override
   _ListProductState createState() => _ListProductState();
@@ -25,65 +23,21 @@ class _ListProductState extends State<ListProduct> {
 
   final List<Map> restaurants = [
     {
-      "image" : burger,
-      "name":"Burger King",
-      "specials":"Vegetarian, Continental"
+      "image": burger,
+      "name": "Burger King",
+      "specials": "Vegetarian, Continental"
     },
-    {
-      "image" : cherry,
-      "name":"Cherry Blossom",
-      "specials":"Salads, Dessert"
-    },
-    {
-      "image" : cupcake,
-      "name":"Cupcake Dream",
-      "specials":"Fast Food"
-    },
-    {
-      "image" : frenchFries,
-      "name":"Hungry Kids",
-      "specials":"French Fries"
-    },
-    {
-      "image" : cupcake,
-      "name":"Cupcake Dream",
-      "specials":"Fast Food"
-    },
-    {
-      "image" : frenchFries,
-      "name":"Hungry Kids",
-      "specials":"French Fries"
-    },
-    {
-      "image" : cupcake,
-      "name":"Cupcake Dream",
-      "specials":"Fast Food"
-    },
-    {
-      "image" : frenchFries,
-      "name":"Hungry Kids",
-      "specials":"French Fries"
-    },
-    {
-      "image" : cupcake,
-      "name":"Cupcake Dream",
-      "specials":"Fast Food"
-    },
-    {
-      "image" : frenchFries,
-      "name":"Hungry Kids",
-      "specials":"French Fries"
-    },
-    {
-      "image" : cupcake,
-      "name":"Cupcake Dream",
-      "specials":"Fast Food"
-    },
-    {
-      "image" : frenchFries,
-      "name":"Hungry Kids",
-      "specials":"French Fries"
-    },
+    {"image": cherry, "name": "Cherry Blossom", "specials": "Salads, Dessert"},
+    {"image": cupcake, "name": "Cupcake Dream", "specials": "Fast Food"},
+    {"image": frenchFries, "name": "Hungry Kids", "specials": "French Fries"},
+    {"image": cupcake, "name": "Cupcake Dream", "specials": "Fast Food"},
+    {"image": frenchFries, "name": "Hungry Kids", "specials": "French Fries"},
+    {"image": cupcake, "name": "Cupcake Dream", "specials": "Fast Food"},
+    {"image": frenchFries, "name": "Hungry Kids", "specials": "French Fries"},
+    {"image": cupcake, "name": "Cupcake Dream", "specials": "Fast Food"},
+    {"image": frenchFries, "name": "Hungry Kids", "specials": "French Fries"},
+    {"image": cupcake, "name": "Cupcake Dream", "specials": "Fast Food"},
+    {"image": frenchFries, "name": "Hungry Kids", "specials": "French Fries"},
   ];
   var productList = [];
   // _fetchProducts() async {
@@ -111,7 +65,6 @@ class _ListProductState extends State<ListProduct> {
     // _fetchProducts();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +102,6 @@ class _ListProductState extends State<ListProduct> {
         slivers: <Widget>[
           _buildAppBar(context),
           _buildPopularRestaurant(),
-
         ],
       ),
     );
@@ -187,51 +139,57 @@ class _ListProductState extends State<ListProduct> {
 
   SliverGrid _buildPopularRestaurant() {
     return SliverGrid(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2
-      ),
-      delegate: SliverChildBuilderDelegate((BuildContext context, int index){
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-          child:Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                     builder: (context) => DetailsProduct(),
-                    ),
-                  );
-                },
-                child:  Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                        height: 130.0,
-                        width: double.infinity,
-                        child: (productList[index]["image"] != null)?
-                        Image.network(productList[index]["image"], fit: BoxFit.cover, ): null),
-                    SizedBox(height: 10.0,),
-                    Text(productList[index]["name"], style: Theme.of(context).textTheme.title.merge(TextStyle(
-                        fontSize: 14.0
-                    ))),
-                    SizedBox(height: 5.0,),
-                    Text(productList[index]["prix"].toString(), style: Theme.of(context).textTheme.subhead.merge(TextStyle(
-                        fontSize: 12.0
-                    )))
-                  ],
-                ),
-              )
-            ],
-          )
-        );
-      },
-          childCount: productList.length
-      ),
+            padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailsProduct(),
+                      ),
+                    );
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                          height: 130.0,
+                          width: double.infinity,
+                          child: (productList[index]["image"] != null)
+                              ? Image.network(
+                                  productList[index]["image"],
+                                  fit: BoxFit.cover,
+                                )
+                              : null),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(productList[index]["name"],
+                          style: Theme.of(context)
+                              .textTheme
+                              .title
+                              .merge(TextStyle(fontSize: 14.0))),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                      Text(productList[index]["prix"].toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subhead
+                              .merge(TextStyle(fontSize: 12.0)))
+                    ],
+                  ),
+                )
+              ],
+            ));
+      }, childCount: productList.length),
     );
   }
 }
-
-

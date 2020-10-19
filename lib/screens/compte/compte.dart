@@ -109,7 +109,9 @@ class _CompteState extends State<Compte> {
                                       padding: EdgeInsets.all(7.0),
                                       splashColor: Colors.blueAccent,
                                       onPressed: () => Navigator.push(
-                                          context, MaterialPageRoute(builder: (_) => LoginPage())),
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => LoginPage())),
                                       child: Text(
                                         "Connectez-vous",
                                         style: TextStyle(
@@ -130,12 +132,14 @@ class _CompteState extends State<Compte> {
                           height: 30,
                           alignment: Alignment.centerLeft,
                           padding: EdgeInsets.only(left: 20.0),
-                          child: Text('MON COMPTE',style: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: 'JosefinSans',
-                            fontWeight: FontWeight.bold,
-                            height: 1.5,
-                          ),
+                          child: Text(
+                            'MON COMPTE',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: 'JosefinSans',
+                              fontWeight: FontWeight.bold,
+                              height: 1.5,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -224,7 +228,7 @@ class _CompteState extends State<Compte> {
                             color: Theme.of(context).hoverColor,
                           ),
                           child: Text("Mes Paramétres"),
-                       ),
+                        ),
                         Container(
                           child: FlatButton(
                             padding: EdgeInsets.all(8.0),
@@ -278,15 +282,14 @@ class _CompteState extends State<Compte> {
                           alignment: Alignment.topCenter,
                           padding: EdgeInsets.only(left: 20.0),
                           width: 400,
-
                           decoration: BoxDecoration(
                             color: Theme.of(context).hoverColor,
                           ),
                           child: FlatButton(
                             textColor: Colors.orangeAccent,
                             padding: EdgeInsets.all(8.0),
-                            onPressed: () => Navigator.push(
-                                context, MaterialPageRoute(builder: (_) => LoginPage())),
+                            onPressed: () => Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => LoginPage())),
                             child: Text(
                               "Connectez-vous",
                               style: TextStyle(fontSize: 20.0),
@@ -301,6 +304,7 @@ class _CompteState extends State<Compte> {
       ),
     );
   }
+
   Divider _buildDivider() {
     return Divider(
       color: divider,

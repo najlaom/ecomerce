@@ -27,7 +27,6 @@ class _CategoryState extends State<Category> {
     super.initState();
     _loadData();
     _fetchCategories();
-
   }
 
   void _loadData() async {
@@ -39,8 +38,7 @@ class _CategoryState extends State<Category> {
 
   _fetchPrdByCat(String idCat) async {
     print("_fetchPrdByCat");
-    var prdByCat =
-    await ProductService().getProductsByCat(idCat);
+    var prdByCat = await ProductService().getProductsByCat(idCat);
     print(prdByCat.toString());
     if (prdByCat.length > 0) {
       setState(() {
@@ -136,88 +134,91 @@ class _CategoryState extends State<Category> {
         child: loading
             ? CircularProgressIndicator()
             : Container(
-          alignment: Alignment.topCenter,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 100,
-                child: ListView.builder(
-                    itemCount: categoryList.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              print(categoryList[index]['name']);
-                              setState(() {
-                                nameCategory = categoryList[index]['name'].toString();
-                                _fetchPrdByCat(categoryList[index]['id'].toString());
-                              });
-                            },
-                            child: CategoryItem(
-                              categoryList[index]['name'],
-                            ),
-                          ),
-                          Divider()
-                        ],
-                      );
-                    }),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).hoverColor,
-                ),
-                width: 5,
-              ),
-              Container(
-                  width: 300,
-                  child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).hoverColor,
-                            ),
-                            height: 7,
-                          ),
-                          Container(
-                            child: FlatButton(
-                              onPressed: () {},
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Tous les Produits",
-                                    style: TextStyle(
-                                      fontSize: 15.0,
-                                      fontFamily: 'JosefinSans',
-                                      fontWeight: FontWeight.bold,
-                                      height: 1.5,
-                                    ),
+                alignment: Alignment.topCenter,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 100,
+                      child: ListView.builder(
+                          itemCount: categoryList.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    print(categoryList[index]['name']);
+                                    setState(() {
+                                      nameCategory = categoryList[index]['name']
+                                          .toString();
+                                      _fetchPrdByCat(
+                                          categoryList[index]['id'].toString());
+                                    });
+                                  },
+                                  child: CategoryItem(
+                                    categoryList[index]['name'],
                                   ),
-                                  SizedBox(
-                                    width: 100,
-                                  ),
-                                  Container(
-                                    alignment: Alignment.centerRight,
-                                    child: Icon(
-                                      Icons.navigate_next_rounded,
-                                      color: Colors.black,
+                                ),
+                                Divider()
+                              ],
+                            );
+                          }),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).hoverColor,
+                      ),
+                      width: 5,
+                    ),
+                    Container(
+                        width: 300,
+                        child: SingleChildScrollView(
+                            child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).hoverColor,
+                              ),
+                              height: 7,
+                            ),
+                            Container(
+                              child: FlatButton(
+                                onPressed: () {},
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Tous les Produits",
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                        fontFamily: 'JosefinSans',
+                                        fontWeight: FontWeight.bold,
+                                        height: 1.5,
+                                      ),
                                     ),
-                                  )
-                                ],
+                                    SizedBox(
+                                      width: 100,
+                                    ),
+                                    Container(
+                                      alignment: Alignment.centerRight,
+                                      child: Icon(
+                                        Icons.navigate_next_rounded,
+                                        color: Colors.black,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          ProductItem(nameCategory: nameCategory, prdList: prdList),
-                        ],
-                      ))),
-            ],
-          ),
-        ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            ProductItem(
+                                nameCategory: nameCategory, prdList: prdList),
+                          ],
+                        ))),
+                  ],
+                ),
+              ),
       ),
     );
   }

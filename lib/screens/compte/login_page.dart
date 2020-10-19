@@ -134,7 +134,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           GestureDetector(
                             onTap: () => Navigator.push(
-                                context, MaterialPageRoute(builder: (_) => RegisterPage())),
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => RegisterPage())),
                             child: Text(
                               'CREER UN COMPTE ?',
                               style: TextStyle(
