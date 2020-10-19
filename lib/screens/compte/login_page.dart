@@ -1,5 +1,10 @@
+import 'dart:convert';
+
+import 'package:ecomerce/screens/compte/compte.dart';
 import 'package:ecomerce/screens/compte/register_page.dart';
+import 'package:ecomerce/services/NetworkHandler.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,6 +15,10 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> _formKey = GlobalKey();
   bool isEnabled = true;
   final Color divider = Colors.black;
+  TextEditingController emailController =TextEditingController();
+  TextEditingController paswwordController =TextEditingController();
+  NetworkHandler networkHandler = NetworkHandler();
+  final storage = new FlutterSecureStorage();
   enableButton() {
     setState(() {
       isEnabled = true;
@@ -60,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: 400,
                       child: TextField(
                         // controller: _textFieldController,
+                        controller: emailController,
                         decoration: InputDecoration(
                           hintText: "Email",
                           //add icon outside input field
@@ -72,6 +82,8 @@ class _LoginPageState extends State<LoginPage> {
                       width: 400,
                       child: TextField(
                         // controller: _textFieldController,
+                        controller: paswwordController,
+                        obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Mot de passe",
                           //add icon outside input field
@@ -100,7 +112,34 @@ class _LoginPageState extends State<LoginPage> {
                       child: FlatButton(
                         padding: EdgeInsets.all(8.0),
                         color: Colors.orangeAccent,
-                        onPressed: () {},
+                        onPressed: () async {
+                          Map<String,String>data={
+                            "email":emailController.text,
+                            "password":paswwordController.text,
+
+                          };
+                          print(data);
+
+                          //networkHandler.get("api/products/getAll");
+                          var response=  await networkHandler.post("api/users/login", data);
+                          if(response.statusCode == 200||response.statusCode == 201){
+                            Map<String,dynamic> output = json.decode(response.body);
+                            print(output['token']);
+                            await storage.write(key: "token", value: output['token']);
+                            /*  Navigator.push(
+                                context, MaterialPageRoute(builder: (_) => Compte())); */
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Compte(),), (route) => false);
+
+
+                          }else{
+
+
+                          }
+                          Navigator.push(
+                              context, MaterialPageRoute(builder: (_) => Compte()));
+
+
+                        },
                         child: Text(
                           "Connectez-vous",
                           style: TextStyle(

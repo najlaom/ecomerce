@@ -2,6 +2,7 @@ import 'package:ecomerce/screens/compte/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Compte extends StatefulWidget {
   const Compte({
@@ -14,6 +15,7 @@ class Compte extends StatefulWidget {
 class _CompteState extends State<Compte> {
   bool loading = true;
   final Color divider = Colors.grey.shade600;
+  final storage = new FlutterSecureStorage();
 
   void _loadData() async {
     await Future.delayed(const Duration(seconds: 2));
@@ -148,7 +150,10 @@ class _CompteState extends State<Compte> {
                         Container(
                           child: FlatButton(
                             padding: EdgeInsets.all(8.0),
-                            onPressed: () {},
+                            onPressed: () async {
+                              String value =  await storage.read(key: "token");
+                              print(value);
+                            },
                             child: Row(
                               children: [
                                 Icon(
@@ -157,7 +162,7 @@ class _CompteState extends State<Compte> {
                                 ),
                                 VerticalDivider(),
                                 Text(
-                                  "Flat Button",
+                                  "Get Token",
                                   style: TextStyle(
                                     fontSize: 20.0,
                                     fontFamily: 'JosefinSans',
