@@ -22,10 +22,12 @@ class _HomeState extends State<Home> {
     _loadData();
     super.initState();
   }
+
   Widget _buildListView(_, index) {
     if (index == 0) return HomeSwiper();
     if (index == 1) return HomeMenu();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,12 +84,13 @@ class _HomeState extends State<Home> {
       ),
       body: Container(
         child: Center(
-          child: loading ? CircularProgressIndicator() :
-          SafeArea(
-              child: ListView.builder(
-                itemBuilder: _buildListView,
-                itemCount: 10,
-              )),
+          child: loading
+              ? CircularProgressIndicator()
+              : SafeArea(
+                  child: ListView.builder(
+                  itemBuilder: _buildListView,
+                  itemCount: 10,
+                )),
         ),
       ),
     );

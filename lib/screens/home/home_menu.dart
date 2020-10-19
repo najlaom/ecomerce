@@ -1,4 +1,3 @@
-
 import 'package:ecomerce/models/model.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +27,7 @@ class _HomeMenuState extends State<HomeMenu> {
                   height: 46,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle, color :categories[index].color),
+                      shape: BoxShape.circle, color: categories[index].color),
                   child: Icon(categories[index].icon, color: Colors.white),
                 ),
                 Padding(
@@ -48,6 +47,6 @@ class _HomeMenuState extends State<HomeMenu> {
           );
         }),
       ),
-       );
+    );
   }
 }

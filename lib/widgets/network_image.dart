@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 class PNetworkImage extends StatelessWidget {
   final String image;
-  final double width,height;
+  final double width, height;
   final BoxFit fit;
-  const PNetworkImage(this.image, {Key key,this.height,this.width, this.fit}) : super(key: key);
+  const PNetworkImage(this.image, {Key key, this.height, this.width, this.fit})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

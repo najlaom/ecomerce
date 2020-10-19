@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:ecomerce/components/assets.dart' as assets;
 
-
 class HomeSwiper extends StatelessWidget {
-
   final List<String> images = [
     assets.images[0],
     assets.images[2],
@@ -18,7 +16,7 @@ class HomeSwiper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-       elevation: 2.0,
+      elevation: 2.0,
       child: Container(
         height: 180,
         child: Swiper(
@@ -37,8 +35,7 @@ class HomeSwiper extends StatelessWidget {
                 color: Colors.grey,
                 activeColor: Colors.red,
                 size: 5.0,
-                activeSize: 7.0
-            ),
+                activeSize: 7.0),
           ),
         ),
       ),
