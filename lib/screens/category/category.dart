@@ -159,7 +159,7 @@ class _CategoryState extends State<Category> {
                                     categoryList[index]['name'],
                                   ),
                                 ),
-                                Divider()
+                                Divider(),
                               ],
                             );
                           }),

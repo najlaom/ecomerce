@@ -1,12 +1,48 @@
 import 'package:ecomerce/screens/product/add_product.dart';
+import 'package:ecomerce/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:ecomerce/components/assets.dart';
 import 'package:ecomerce/widgets/list_item.dart';
 import 'package:ecomerce/widgets/item_prography.dart';
 import 'package:ecomerce/widgets/network_image.dart';
 
-class DetailsProduct extends StatelessWidget {
-  static final String path = "lib/src/pages/grocery/gdetails.dart";
+class DetailsProduct extends StatefulWidget {
+  String idProduct;
+  DetailsProduct({this.idProduct});
+  @override
+  _DetailsProductState createState() => _DetailsProductState();
+}
+
+class _DetailsProductState extends State<DetailsProduct> {
+  @override
+  void initState() {
+    super.initState();
+    _getProductsByDetails();
+  }
+
+  var product = {};
+
+  _getProductsByDetails() async {
+    print("_fetchProducts");
+    var productDetails =
+        await ProductService().getProductByDetails(this.widget.idProduct.toString());
+    print(productDetails.toString());
+    if (productDetails.length > 0) {
+      setState(() {
+        product = productDetails;
+        //fetch Products of firs Cat
+        // currentCat = cats[0]["id"];
+      });
+      print("bbbbbbbbbbbbbbbbbbbbb");
+      print(product.toString());
+      // _fetchcatProducts();
+    } else {
+      setState(() {
+        product = {};
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,14 +67,7 @@ class DetailsProduct extends StatelessWidget {
                   padding: EdgeInsets.all(30.0),
                   child: GrocerySubtitle(
                       text:
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras scelerisque nibh ut eros suscipit, vel cursus dolor imperdiet. Proin volutpat ligula eget purus maximus tristique. Pellentesque ullamcorper libero vitae metus feugiat fringilla. Ut luctus neque sed tortor placerat, faucibus mollis risus ullamcorper. Cras at nunc et odio ultrices tempor et.")),
-              Container(
-                  padding: EdgeInsets.only(left: 20.0, bottom: 10.0),
-                  child: GroceryTitle(text: "Related Items")),
-              GroceryListItemTwo(
-                  title: "Broccoli", image: brocoli, subtitle: "1 kg"),
-              GroceryListItemTwo(
-                  title: "Cabbage", image: cabbage, subtitle: "1 kg"),
+                          product["descriptions"].toString())),
             ],
           ),
         ),
@@ -82,18 +111,18 @@ class DetailsProduct extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   child: PNetworkImage(
-                    cabbage,
+                    product["image"],
                     height: 200,
                   ),
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
-                GroceryTitle(text: "Local Cabbage"),
+                GroceryTitle(text: product["name"].toString()),
                 SizedBox(
                   height: 5.0,
                 ),
-                GrocerySubtitle(text: "1 kg")
+                GrocerySubtitle(text: product["prix"].toString())
               ],
             ),
           ),

@@ -47,4 +47,29 @@ class ProductService {
     } else
       return [];
   }
+
+  Future getProductByDetails(String productId) async {
+    var url = 'http://192.168.43.144:8080/api/products/getByIdWithDetais/' +
+        productId;
+    print("urlllllllllllllll");
+    print(url);
+    var productByDetaills = await http.get(url);
+    print("productByDetaills.body");
+    print(productByDetaills);
+    if (productByDetaills.statusCode == 201) {
+      print("productByDetaills.body");
+      print(productByDetaills.body);
+      var jsonproductByDetails = json.decode(productByDetaills.body);
+      print("aaaaaaaaaaaaaaaa");
+      print(jsonproductByDetails.toString());
+      if (jsonproductByDetails["success"] == true &&
+          jsonproductByDetails["data"].length > 0) {
+        print(jsonproductByDetails.toString());
+        return jsonproductByDetails["data"];
+      } else
+        return [];
+    } else
+      return [];
+  }
 }
+

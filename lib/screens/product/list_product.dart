@@ -39,32 +39,34 @@ class _ListProductState extends State<ListProduct> {
     {"image": cupcake, "name": "Cupcake Dream", "specials": "Fast Food"},
     {"image": frenchFries, "name": "Hungry Kids", "specials": "French Fries"},
   ];
-  var productList = [];
-  // _fetchProducts() async {
-  //   print("_fetchProducts");
-  //   var products = await ProductService().getProducts();
-  //   print(products.toString());
-  //   if (products.length > 0) {
-  //     setState(() {
-  //       productList = products;
-  //       //fetch Products of firs Cat
-  //       // currentCat = cats[0]["id"];
-  //     });
-  //     print("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-  //     print(productList.toString());
-  //     // _fetchcatProducts();
-  //   } else {
-  //     setState(() {
-  //       productList = [];
-  //     });
-  //   }
-  // }
 
   @override
   void initState() {
-    // _fetchProducts();
     super.initState();
+    _fetchProducts();
   }
+  var productList = [];
+
+  _fetchProducts() async {
+    print("_fetchProducts");
+    var products = await ProductService().getProducts();
+    print(products.toString());
+    if (products.length > 0) {
+      setState(() {
+        productList = products;
+        //fetch Products of firs Cat
+        // currentCat = cats[0]["id"];
+      });
+      print("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+      print(productList.toString());
+      // _fetchcatProducts();
+    } else {
+      setState(() {
+        productList = [];
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +103,7 @@ class _ListProductState extends State<ListProduct> {
       body: CustomScrollView(
         slivers: <Widget>[
           _buildAppBar(context),
-          _buildPopularRestaurant(),
+          _buildListProduct(),
         ],
       ),
     );
@@ -137,7 +139,7 @@ class _ListProductState extends State<ListProduct> {
     );
   }
 
-  SliverGrid _buildPopularRestaurant() {
+  SliverGrid _buildListProduct() {
     return SliverGrid(
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
@@ -152,7 +154,7 @@ class _ListProductState extends State<ListProduct> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetailsProduct(),
+                        builder: (context) => DetailsProduct(idProduct: productList[index]['id'].toString()),
                       ),
                     );
                   },

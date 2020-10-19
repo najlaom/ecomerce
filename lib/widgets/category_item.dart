@@ -34,8 +34,8 @@ class _CategoryItemState extends State<CategoryItem> {
   // }
   @override
   void initState() {
-    // _fetchCategories();
     super.initState();
+    // _fetchCategories();
   }
 
   @override
