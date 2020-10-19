@@ -35,6 +35,8 @@ dependencies:
   flutter_custom_clippers: ^1.1.2
   intl_phone_field: ^1.4.2
   http: ^0.12.2
+  logger: ^0.9.4
+  flutter_secure_storage: ^3.3.5
 
 
 dev_dependencies:

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:ecomerce/screens/screen.dart';
+import 'package:ecomerce/services/NetworkHandler.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -7,9 +9,20 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  TextEditingController prenomController =TextEditingController();
+  TextEditingController nomController =TextEditingController();
+  TextEditingController emailController =TextEditingController();
+  TextEditingController paswwordController =TextEditingController();
+  TextEditingController phoneController =TextEditingController();
+  TextEditingController phone2Controller =TextEditingController();
+  TextEditingController villeController =TextEditingController();
+  TextEditingController regionController =TextEditingController();
+  TextEditingController adresseController =TextEditingController();
+
   GlobalKey<FormState> _formKey = GlobalKey();
   bool isEnabled = true;
   final Color divider = Colors.black;
+  NetworkHandler networkHandler = NetworkHandler();
   enableButton() {
     setState(() {
       isEnabled = true;
@@ -60,36 +73,31 @@ class _RegisterPageState extends State<RegisterPage> {
                       width: 400,
                       child: TextField(
                         // controller: _textFieldController,
+                        controller: prenomController,
                         decoration: InputDecoration(
                           hintText: "Prénom",
                           icon: Icon(Icons.person),
                         ),
                       ),
                     ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 35.0,
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              bottom: 20.0, left: 20.0, right: 20.0),
-                          width: 365,
-                          child: TextField(
-                            // controller: _textFieldController,
-                            decoration: InputDecoration(
-                              hintText: "Nom",
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(),
                     Container(
-                      padding: EdgeInsets.only(
-                          bottom: 20.0, left: 20.0, right: 20.0),
+                      padding: EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
                       width: 400,
                       child: TextField(
+                        // controller: _textFieldController,
+                        controller: nomController,
+                        decoration: InputDecoration(
+                          hintText: "Nom",
+                          //add icon outside input field
+                          icon: Icon(Icons.person_outlined ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(bottom: 20.0, left: 20.0, right: 20.0),
+                      width: 400,
+                      child: TextField(
+                        controller: emailController,
                         // controller: _textFieldController,
                         decoration: InputDecoration(
                           hintText: "Email",
@@ -103,6 +111,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           bottom: 20.0, left: 20.0, right: 20.0),
                       width: 400,
                       child: TextField(
+                        controller: paswwordController,
+                        obscureText: true,
                         // controller: _textFieldController,
                         decoration: InputDecoration(
                           hintText: "Mot de passe",
@@ -117,6 +127,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           bottom: 20.0, left: 20.0, right: 20.0),
                       width: 400,
                       child: IntlPhoneField(
+                        controller: phoneController,
                         decoration: InputDecoration(
                           labelText: 'Phone Number',
                         ),
@@ -126,11 +137,88 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Container(
+                      padding: EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
+                      width: 400,
+                      child: IntlPhoneField(
+                        controller: phone2Controller,
+                        decoration: InputDecoration(
+                          labelText: 'Phone Number 2',
+                        ),
+                        onChanged: (phone) {
+                          print(phone.completeNumber);
+                        },
+
+                      ),
+                    ),
+
+
+                    Container(
+                      padding: EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
+                      width: 400,
+                      child: TextField(
+                        controller: villeController,
+                        decoration: InputDecoration(
+                          hintText: "Ville",
+                          //add icon outside input field
+                          icon: Icon(Icons.person_pin_circle_outlined),
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.only(bottom: 50.0, left: 20.0,right: 20.0),
+                      width: 400,
+                      child: TextField(
+                        controller: regionController,
+                        decoration: InputDecoration(
+                          hintText: "Region",
+                          //add icon outside input field
+                          icon: Icon(Icons.person_pin_circle_outlined ),
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
+                      width: 400,
+                      child: TextField(
+                        controller: adresseController,
+                        decoration: InputDecoration(
+                          hintText: "Adresse",
+                          //add icon outside input field
+                          icon: Icon(Icons.house),
+                        ),
+                      ),
+                    ),
+                    Container(
                       alignment: Alignment.center,
                       child: FlatButton(
                         padding: EdgeInsets.all(8.0),
                         color: Colors.orangeAccent,
-                        onPressed: () {},
+
+                        onPressed: () async {
+
+
+                          Map<String,String>data={
+                            "email":emailController.text,
+                            "password":paswwordController.text,
+                            "phone":phoneController.text,
+                            "nom" : nomController.text,
+                            "prenom":prenomController.text,
+                            "ville":villeController.text,
+                            "region" : regionController.text,
+                            "phoneTwo":phone2Controller.text,
+                            "adress":adresseController.text,
+
+                          };
+                          print(data);
+
+                          //networkHandler.get("api/products/getAll");
+                          await  networkHandler.post("api/users/singUp", data);
+                          /*    Navigator.push(
+                              context, MaterialPageRoute(builder: (_) => Compte()));*/
+                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => Compte()), (route) => false);
+                        },
                         child: Text(
                           "Créer",
                           style: TextStyle(
