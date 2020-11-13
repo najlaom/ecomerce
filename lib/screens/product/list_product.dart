@@ -9,37 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:ecomerce/components/assets.dart';
 
 class ListProduct extends StatefulWidget {
+  String nameCategory;
   @override
   _ListProductState createState() => _ListProductState();
 }
 
 class _ListProductState extends State<ListProduct> {
-  final List<String> sliderItems = [
-    breakfast,
-    burger1,
-    meal,
-    pancake,
-  ];
-
-  final List<Map> restaurants = [
-    {
-      "image": burger,
-      "name": "Burger King",
-      "specials": "Vegetarian, Continental"
-    },
-    {"image": cherry, "name": "Cherry Blossom", "specials": "Salads, Dessert"},
-    {"image": cupcake, "name": "Cupcake Dream", "specials": "Fast Food"},
-    {"image": frenchFries, "name": "Hungry Kids", "specials": "French Fries"},
-    {"image": cupcake, "name": "Cupcake Dream", "specials": "Fast Food"},
-    {"image": frenchFries, "name": "Hungry Kids", "specials": "French Fries"},
-    {"image": cupcake, "name": "Cupcake Dream", "specials": "Fast Food"},
-    {"image": frenchFries, "name": "Hungry Kids", "specials": "French Fries"},
-    {"image": cupcake, "name": "Cupcake Dream", "specials": "Fast Food"},
-    {"image": frenchFries, "name": "Hungry Kids", "specials": "French Fries"},
-    {"image": cupcake, "name": "Cupcake Dream", "specials": "Fast Food"},
-    {"image": frenchFries, "name": "Hungry Kids", "specials": "French Fries"},
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -74,7 +49,7 @@ class _ListProductState extends State<ListProduct> {
       //backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.black87,
-        title: Text('Nom Product'),
+        title: Text(this.widget.nameCategory),
         actions: <Widget>[
           Container(
             width: 35,
@@ -164,9 +139,9 @@ class _ListProductState extends State<ListProduct> {
                       Container(
                           height: 130.0,
                           width: double.infinity,
-                          child: (productList[index]["image"] != null)
+                          child: ("http://192.168.1.3:8085/image/" + productList[index]["image"] != null)
                               ? Image.network(
-                                  productList[index]["image"],
+                            "http://192.168.1.3:8085/image/" + productList[index]["image"],
                                   fit: BoxFit.cover,
                                 )
                               : null),

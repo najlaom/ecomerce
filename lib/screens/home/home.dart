@@ -1,4 +1,5 @@
 import 'package:ecomerce/screens/home/home_menu.dart';
+import 'package:ecomerce/screens/home/home_product_promo.dart';
 import 'package:ecomerce/screens/home/home_swiper.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +27,7 @@ class _HomeState extends State<Home> {
   Widget _buildListView(_, index) {
     if (index == 0) return HomeSwiper();
     if (index == 1) return HomeMenu();
+    if (index == 2) return HomeProductPromo();
   }
 
   @override

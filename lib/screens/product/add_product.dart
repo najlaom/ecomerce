@@ -9,8 +9,14 @@ final priceTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-class MyOrderPage extends StatelessWidget {
-  static final String path = "lib/src/pages/food/food_checkout.dart";
+class AddProduct extends StatefulWidget {
+  String idProduct;
+  AddProduct({this.idProduct});
+  @override
+  _AddProductState createState() => _AddProductState();
+}
+
+class _AddProductState extends State<AddProduct> {
 
   @override
   Widget build(BuildContext context) {

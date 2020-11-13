@@ -21,19 +21,11 @@ class _CategoryState extends State<Category> {
   final Color divider = Colors.grey.shade600;
   String nameCategory = "";
   var prdList = [];
-
   @override
   void initState() {
     super.initState();
     _loadData();
     _fetchCategories();
-  }
-
-  void _loadData() async {
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {
-      loading = false;
-    });
   }
 
   _fetchPrdByCat(String idCat) async {
@@ -50,6 +42,13 @@ class _CategoryState extends State<Category> {
         prdList = [];
       });
     }
+  }
+
+  void _loadData() async {
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      loading = false;
+    });
   }
 
   var categoryList = [];
@@ -145,8 +144,8 @@ class _CategoryState extends State<Category> {
                           itemBuilder: (context, index) {
                             return Column(
                               children: [
-                                GestureDetector(
-                                  onTap: () {
+                                FlatButton(
+                                  onPressed: () {
                                     print(categoryList[index]['name']);
                                     setState(() {
                                       nameCategory = categoryList[index]['name']
@@ -185,6 +184,8 @@ class _CategoryState extends State<Category> {
                               child: FlatButton(
                                 onPressed: () {},
                                 child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Tous les Produits",
@@ -194,9 +195,6 @@ class _CategoryState extends State<Category> {
                                         fontWeight: FontWeight.bold,
                                         height: 1.5,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 100,
                                     ),
                                     Container(
                                       alignment: Alignment.centerRight,
@@ -208,9 +206,6 @@ class _CategoryState extends State<Category> {
                                   ],
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 20,
                             ),
                             ProductItem(
                                 nameCategory: nameCategory, prdList: prdList),

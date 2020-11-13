@@ -33,6 +33,7 @@ class _ProductItemState extends State<ProductItem> {
           alignment: Alignment.center,
           padding: EdgeInsets.only(left: 8.0, right: 8.0),
           child: Row(
+            mainAxisAlignment:  MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 this.widget.nameCategory,
@@ -50,9 +51,6 @@ class _ProductItemState extends State<ProductItem> {
                         MaterialPageRoute(builder: (_) => ListProduct())),
                     child: Row(
                       children: [
-                        SizedBox(
-                          width: 100,
-                        ),
                         Text(
                           'Voir tout',
                           textAlign: TextAlign.center,
@@ -69,7 +67,7 @@ class _ProductItemState extends State<ProductItem> {
         Divider(),
         Container(
             padding: EdgeInsets.only(left: 3.0),
-            height: 200,
+            height: 500,
             child: Column(
               children: [Product(prdList: this.widget.prdList)],
             )),

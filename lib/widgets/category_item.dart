@@ -41,11 +41,6 @@ class _CategoryItemState extends State<CategoryItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
-      alignment: Alignment.center,
-      child: FlatButton(
-        // onPressed: () => Navigator.push(
-        //     context, MaterialPageRoute(builder: (_) => ProductItem(id: categoryList['id'].toString(), title: categoryList['name']))),
         child: Text(
           widget.title,
           textAlign: TextAlign.center,
@@ -56,7 +51,6 @@ class _CategoryItemState extends State<CategoryItem> {
             height: 1.5,
           ),
         ),
-      ),
     );
   }
 }
