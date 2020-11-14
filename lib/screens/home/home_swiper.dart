@@ -50,7 +50,7 @@ class _HomeSwiperState extends State<HomeSwiper> {
           autoplay: true,
           itemBuilder: (BuildContext context, int index) {
             return Image.network(
-              "http://192.168.1.3:8085/image/"+productList[index]["image"],
+              "http://192.168.43.144:8085/image/"+productList[index]["image"],
             );
           },
           itemCount: productList.length,

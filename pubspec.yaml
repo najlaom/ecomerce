@@ -37,6 +37,7 @@ dependencies:
   http: ^0.12.2
   logger: ^0.9.4
   flutter_secure_storage: ^3.3.5
+  shared_preferences: ^0.5.8
 
 
 dev_dependencies:

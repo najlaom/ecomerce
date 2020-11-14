@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ecomerce/screens/product/add_product.dart';
+import 'package:ecomerce/services/bloc/cart_items.dart';
 import 'package:ecomerce/services/product_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -309,7 +310,7 @@ class _DetailsProductState extends State<DetailsProduct> {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   child: PNetworkImage(
-                    "http://192.168.1.3:8085/image/" + product["image"],
+                    "http://192.168.43.144:8085/image/" + product["image"],
                     height: 150,
                   ),
                 ),
@@ -343,12 +344,13 @@ class _DetailsProductState extends State<DetailsProduct> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0)),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddProduct()),
-
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => AddProduct()),
+                //
+                // );
+                bloc.addToCart(product);
               },
               child: Text(
                 "Add to Cart",

@@ -49,7 +49,7 @@ class _ListProductState extends State<ListProduct> {
       //backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.black87,
-        title: Text(this.widget.nameCategory),
+        title: Text("fffff"),
         actions: <Widget>[
           Container(
             width: 35,
@@ -139,9 +139,9 @@ class _ListProductState extends State<ListProduct> {
                       Container(
                           height: 130.0,
                           width: double.infinity,
-                          child: ("http://192.168.1.3:8085/image/" + productList[index]["image"] != null)
+                          child: ("http://192.168.43.144:8085/image/" + productList[index]["image"] != null)
                               ? Image.network(
-                            "http://192.168.1.3:8085/image/" + productList[index]["image"],
+                            "http://192.168.43.144:8085/image/" + productList[index]["image"],
                                   fit: BoxFit.cover,
                                 )
                               : null),

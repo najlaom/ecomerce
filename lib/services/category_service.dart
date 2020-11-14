@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class CategoryService {
   Future getCategory() async {
-    var url = 'http://192.168.1.3:8085/api/categorys/all';
+    var url = 'http://192.168.43.144:8085/api/categorys/all';
     print(url);
     var searchResponse = await http.get(url);
     if (searchResponse.statusCode == 201) {

@@ -1,4 +1,6 @@
 import 'package:ecomerce/models/model.dart';
+import 'package:ecomerce/services/bloc/cart_items.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecomerce/components/assets.dart';
 import 'package:ecomerce/components/colors.dart';
@@ -17,6 +19,14 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
+
+  List cartContent = [];
+
+  @override
+  void initState() {
+    super.initState();
+    cartContent = bloc.allItems;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,36 +69,21 @@ class _AddProductState extends State<AddProduct> {
                 ),
               ),
               const SizedBox(height: 30.0),
-              OrderListItem(
-                product: CategoryProduct(
-                  title: "gggggggg",
-                  qty: 2,
-                  price: "12",
-                  color: Colors.deepOrange,
-                  image: images[0],
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              OrderListItem(
-                product: CategoryProduct(
-                  title: "Burger",
-                  qty: 1,
-                  price: "15",
-                  color: Colors.deepOrange,
-                  image: images[1],
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              OrderListItem(
-                product: CategoryProduct(
-                  title: "French Fries",
-                  qty: 1,
-                  price: "8",
-                  color: Colors.deepOrange,
-                  image: images[4],
-                ),
-              ),
-              const SizedBox(height: 20.0),
+              ...cartContent.map((e) => Column(
+                children: [
+                  OrderListItem(
+                    product: CategoryProduct(
+                      title: e["name"],
+                      qty: e["quantite"],
+                      price: e["prix"],
+                      color: Colors.deepOrange,
+                      image: "http://192.168.43.144:8085/image/" + e["image"],
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                ],
+              )).toList(),
+
               _buildDivider(),
               const SizedBox(height: 20.0),
               Row(
