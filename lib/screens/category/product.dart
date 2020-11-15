@@ -84,7 +84,7 @@ class _ProductState extends State<Product> {
                         //width: 200,
                         child: (this.widget.prdList[index]['image'] != null)
                             ? Image.network(
-                         "http://192.168.43.144:8085/image/"+this.widget.prdList[index]['image'],
+                         "http://192.168.1.3:8085/image/"+this.widget.prdList[index]['image'],
                                 width: 50,
                                 height: 50,
                               )

@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class CategoryService {
+  String baseurl ="http://192.168.1.3:8085/";
   Future getCategory() async {
-    var url = 'http://192.168.43.144:8085/api/categorys/all';
+
+    var url = baseurl+'api/categorys/all';
     print(url);
     var searchResponse = await http.get(url);
     if (searchResponse.statusCode == 201) {

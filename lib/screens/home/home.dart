@@ -64,7 +64,8 @@ class _HomeState extends State<Home> {
                           VerticalDivider(),
                           Expanded(
                             child: Text(
-                              'Recherche sur moll + ' + bloc.allItems.length.toString(),
+                              'Recherche sur moll + ' +
+                                  bloc.allItems.length.toString(),
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2
@@ -92,24 +93,25 @@ class _HomeState extends State<Home> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => AddProduct()),
+                                  builder: (context) => AddProduct()),
                             );
                           },
                         ),
                         bloc.allItems.length > 0
                             ? Positioned(
-                          right: 15,
-                          top: -3,
-                          child: Container(
-                              decoration: new BoxDecoration(
-                                color: Colors.red,
-                                shape: BoxShape.circle,
-                              ),
-                              padding: EdgeInsets.all(5.0),
-                              child: Text(bloc.allItems.length.toString(),
-                                  style:
-                                  TextStyle(fontSize: 14, color: Colors.white))),
-                        )
+                                right: 15,
+                                top: -3,
+                                child: Container(
+                                    decoration: new BoxDecoration(
+                                      color: Colors.orange.shade700,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    padding: EdgeInsets.all(5.0),
+                                    child: Text(bloc.allItems.length.toString(),
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.white))),
+                              )
                             : Container()
                       ],
                     ),
@@ -122,14 +124,13 @@ class _HomeState extends State<Home> {
                 child: loading
                     ? CircularProgressIndicator()
                     : SafeArea(
-                    child: ListView.builder(
-                      itemBuilder: _buildListView,
-                      itemCount: 10,
-                    )),
+                        child: ListView.builder(
+                        itemBuilder: _buildListView,
+                        itemCount: 10,
+                      )),
               ),
             ),
           );
-        }
-    );
+        });
   }
 }

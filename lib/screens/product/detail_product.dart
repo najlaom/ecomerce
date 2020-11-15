@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ecomerce/screens/home/home.dart';
 import 'package:ecomerce/screens/product/add_product.dart';
 import 'package:ecomerce/services/bloc/cart_items.dart';
 import 'package:ecomerce/services/product_service.dart';
@@ -51,7 +52,8 @@ class _DetailsProductState extends State<DetailsProduct> {
         backgroundColor: Colors.black,
         title: Text("Details"),
       ),
-      body: _buildPageContent(context),
+      body:  (_buildPageContent(context) != null)
+      ? _buildPageContent(context) : null,
     );
   }
 
@@ -310,7 +312,7 @@ class _DetailsProductState extends State<DetailsProduct> {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   child: PNetworkImage(
-                    "http://192.168.43.144:8085/image/" + product["image"],
+                    "http://192.168.1.3:8085/image/" + product["image"],
                     height: 150,
                   ),
                 ),
@@ -351,6 +353,9 @@ class _DetailsProductState extends State<DetailsProduct> {
                 //
                 // );
                 bloc.addToCart(product);
+                Navigator.of(context).pop(null);
+
+
               },
               child: Text(
                 "Add to Cart",

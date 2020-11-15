@@ -1,4 +1,6 @@
 import 'package:ecomerce/screens/compte/login_page.dart';
+import 'package:ecomerce/screens/product/add_product.dart';
+import 'package:ecomerce/services/bloc/cart_items.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
@@ -32,39 +34,68 @@ class _CompteState extends State<Compte> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black87,
-        title: Text('Mon Compte'),
-        actions: <Widget>[
-          Container(
-            width: 35,
-            child: Center(
-              child: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.white,
+    return StreamBuilder(
+      initialData: bloc.allItems,
+        stream: bloc.getStream,
+        builder: (context, snapshot){
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.black87,
+              title: Text('Mon Compte'),
+              actions: <Widget>[
+                Container(
+                  width: 35,
+                  child: Center(
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                        onPressed: null),
                   ),
-                  onPressed: null),
-            ),
-          ),
-          Container(
-            width: 35,
-            child: Center(
-              child: IconButton(
-                  icon: Icon(
+                ),
+                Container(
+                  width: 35,
+                  child: Center(
+                    child: Stack(
+                      children: [
+                    IconButton(
+                    icon: Icon(
                     Icons.shopping_cart_outlined,
-                    color: Colors.white,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddProduct()),
+                      );
+                    },
                   ),
-                  onPressed: null),
+                        bloc.allItems.length>0 ?
+                            Positioned(
+                                child: Container(
+                                  decoration: new BoxDecoration(
+                                    color: Colors.orange.shade700,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Text(
+                                    bloc.allItems.length.toString(),
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.white),
+                                  ),
+                            )): Container()
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
-          )
-        ],
-      ),
-      body: Container(
-        child: loading
-            ? CircularProgressIndicator()
-            : Stack(
+            body: Container(
+              child: loading
+                  ? CircularProgressIndicator()
+                  : Stack(
                 children: <Widget>[
                   ClipPath(
                     clipper: DiagonalPathClipperOne(),
@@ -78,7 +109,7 @@ class _CompteState extends State<Compte> {
                       children: <Widget>[
                         Container(
                           padding:
-                              EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                          EdgeInsets.only(left: 20, right: 20, bottom: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -306,8 +337,9 @@ class _CompteState extends State<Compte> {
                   ),
                 ],
               ),
-      ),
-    );
+            ),
+          );
+        });
   }
 
   Divider _buildDivider() {

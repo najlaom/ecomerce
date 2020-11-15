@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ProductService {
+  String baseurl ="http://192.168.1.3:8085/";
   Future getProducts() async {
     //najlaaa
-    var url = 'http://192.168.43.144:8085/api/products/getAll';
+    var url = baseurl+'api/products/getAll';
     //print(url);
     var searchResponse = await http.get(url);
     // print(searchResponse.body);
@@ -28,7 +29,7 @@ class ProductService {
 
   Future getProductsByCat(String categoryId) async {
     //najlaa
-    var url = 'http://192.168.43.144:8085/api/products/getAllByIdCategory/' +
+    var url = baseurl+'api/products/getAllByIdCategory/' +
         categoryId;
    // print("urlllllllllllllll");
    // print(url);
@@ -56,7 +57,7 @@ class ProductService {
 
   Future getProductByDetails(String productId) async {
     //najla
-    var url = 'http://192.168.43.144:8085/api/products/getByIdWithDetais/' +
+    var url = baseurl+'api/products/getByIdWithDetais/' +
         productId;
     // print("urlllllllllllllll");
     // print(url);
@@ -83,7 +84,7 @@ class ProductService {
 
   Future getDescriptionById(String descriptionId) async {
     //najla
-    var url = 'http://192.168.43.144:8085/api/descriptions/getById/' +
+    var url = baseurl+'api/descriptions/getById/' +
         descriptionId;
     var description = await http.get(url);
 
@@ -107,7 +108,7 @@ class ProductService {
 
   Future getProductsSponsor() async {
     //najlaaa
-    var url = 'http://192.168.43.144:8085/api/products/getAllSponsor';
+    var url = baseurl+'api/products/getAllSponsor';
     //print(url);
     var searchResponse = await http.get(url);
     // print(searchResponse.body);
@@ -128,7 +129,7 @@ class ProductService {
       return [];
   }
   Future getProductsPromo() async {
-    var url = 'http://192.168.43.144:8085/api/products/getAllPromo';
+    var url = baseurl+'api/products/getAllPromo';
     //print(url);
     var searchResponse = await http.get(url);
     // print(searchResponse.body);

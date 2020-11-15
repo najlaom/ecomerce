@@ -56,7 +56,7 @@ class _HomeProductPromoState extends State<HomeProductPromo> {
                   overflow: Overflow.visible,
                   children: [
                     PNetworkImage(
-                      "http://192.168.43.144:8085/image/" +
+                      "http://192.168.1.3:8085/image/" +
                           productList[index]["image"],
                       height: 150,
                     ),

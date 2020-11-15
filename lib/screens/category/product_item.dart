@@ -1,5 +1,6 @@
 import 'package:ecomerce/screens/category/product.dart';
 import 'package:ecomerce/screens/product/list_product.dart';
+import 'package:ecomerce/screens/product/list_product_by_category.dart';
 import 'package:ecomerce/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,7 @@ class _ProductItemState extends State<ProductItem> {
                 //alignment: Alignment.centerLeft,
                 child: FlatButton(
                     onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => ListProduct())),
+                        MaterialPageRoute(builder: (_) => ListProductByCategory())),
                     child: Row(
                       children: [
                         Text(

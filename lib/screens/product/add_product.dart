@@ -77,7 +77,7 @@ class _AddProductState extends State<AddProduct> {
                       qty: e["quantite"],
                       price: e["prix"],
                       color: Colors.deepOrange,
-                      image: "http://192.168.43.144:8085/image/" + e["image"],
+                      image: "http://192.168.1.3:8085/image/" + e["image"],
                     ),
                   ),
                   const SizedBox(height: 20.0),
