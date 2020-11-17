@@ -19,7 +19,6 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
-
   List cartContent = [];
 
   @override
@@ -69,21 +68,14 @@ class _AddProductState extends State<AddProduct> {
                 ),
               ),
               const SizedBox(height: 30.0),
-              ...cartContent.map((e) => Column(
-                children: [
-                  OrderListItem(
-                    product: CategoryProduct(
-                      title: e["name"],
-                      qty: e["quantite"],
-                      price: e["prix"],
-                      color: Colors.deepOrange,
-                      image: "http://192.168.1.3:8085/image/" + e["image"],
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                ],
-              )).toList(),
-
+              ...cartContent
+                  .map((e) => Column(
+                        children: [
+                          OrderListItem(product: e),
+                          const SizedBox(height: 20.0),
+                        ],
+                      ))
+                  .toList(),
               _buildDivider(),
               const SizedBox(height: 20.0),
               Row(
@@ -167,10 +159,17 @@ class OrderItem {
   OrderItem({this.title, this.qty, this.price, this.image, this.bgColor});
 }
 
-class OrderListItem extends StatelessWidget {
-  final CategoryProduct product;
+class OrderListItem extends StatefulWidget {
+  final product;
 
   const OrderListItem({Key key, this.product}) : super(key: key);
+
+  @override
+  _OrderListItemState createState() => _OrderListItemState();
+}
+
+class _OrderListItemState extends State<OrderListItem> {
+  int numOfItems = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -183,12 +182,12 @@ class OrderListItem extends StatelessWidget {
             height: 100,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              color: product.color,
+              color: Colors.deepOrange,
               borderRadius: BorderRadius.circular(20.0),
             ),
-            child: product.image != null
+            child: widget.product['image'] != null
                 ? Image.network(
-                    product.image,
+                    "http://192.168.1.3:8085/image/" + widget.product['image'],
                     fit: BoxFit.cover,
                   )
                 : null,
@@ -200,7 +199,7 @@ class OrderListItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  product.title,
+                  widget.product['name'],
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0,
@@ -224,10 +223,15 @@ class OrderListItem extends StatelessWidget {
                         iconSize: 18.0,
                         padding: const EdgeInsets.all(2.0),
                         icon: Icon(Icons.remove),
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            bloc.removeFromCart(widget.product);
+                          });
+                        },
                       ),
                       Text(
-                        "${product.qty}",
+                        "${widget.product['quantite']}",
+
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -238,7 +242,13 @@ class OrderListItem extends StatelessWidget {
                         iconSize: 18.0,
                         padding: const EdgeInsets.all(2.0),
                         icon: Icon(Icons.add),
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            bloc.addToCart(widget.product);
+                            print(widget.product['quantite']);
+                            print(widget.product);
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -247,10 +257,24 @@ class OrderListItem extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10.0),
-          Text(
-            "\$${product.price * product.qty}",
-            style: priceTextStyle,
-          ),
+          Column(
+            children: [
+              Text(
+                "\$${widget.product['prix'] * widget.product['quantite']}",
+                style: priceTextStyle,
+              ),
+              IconButton(
+                iconSize: 18.0,
+                padding: const EdgeInsets.all(2.0),
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  setState(() {
+                    bloc.deletItem(widget.product);
+                  });
+                },
+              ),
+            ],
+          )
         ],
       ),
     );

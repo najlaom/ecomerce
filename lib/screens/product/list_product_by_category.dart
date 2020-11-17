@@ -8,6 +8,7 @@ import 'package:ecomerce/widgets/category_item.dart';
 import 'package:flutter/material.dart';
 
 class ListProductByCategory extends StatefulWidget {
+
   @override
   _ListProductByCategoryState createState() => _ListProductByCategoryState();
 }
@@ -27,6 +28,8 @@ class _ListProductByCategoryState extends State<ListProductByCategory> {
 
   _fetchPrdByCat(String idCat) async {
     print("_fetchPrdByCat");
+
+    print(idCat);
     var prdByCat = await ProductService().getProductsByCat(idCat);
     print(prdByCat.toString());
     if (prdByCat.length > 0) {
@@ -50,7 +53,7 @@ class _ListProductByCategoryState extends State<ListProductByCategory> {
       setState(() {
         categoryList = categories;
         nameCategory = categories[0]["name"].toString();
-        _fetchPrdByCat(categories[0]["id"].toString());
+        _fetchPrdByCat(ProductService.idByCat.toString());
         //fetch Products of firs Cat
         // currentCat = cats[0]["id"];
       });

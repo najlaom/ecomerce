@@ -1,13 +1,16 @@
 import 'package:ecomerce/screens/category/product.dart';
 import 'package:ecomerce/screens/product/list_product.dart';
 import 'package:ecomerce/screens/product/list_product_by_category.dart';
+import 'package:ecomerce/services/product_service.dart';
 import 'package:ecomerce/widgets/network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductItem extends StatefulWidget {
   String nameCategory;
+  int idByCategory;
   var prdList;
-  ProductItem({this.nameCategory, this.prdList});
+  ProductItem({this.nameCategory, this.prdList, this.idByCategory});
 
   @override
   _ProductItemState createState() => _ProductItemState();
@@ -48,8 +51,12 @@ class _ProductItemState extends State<ProductItem> {
               Container(
                 //alignment: Alignment.centerLeft,
                 child: FlatButton(
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => ListProductByCategory())),
+                    onPressed: ()
+                       {
+                      // ProductService.idByCat = this.widget.idByCategory,
+                       Navigator.push(context,
+                       MaterialPageRoute(builder: (_) => ListProductByCategory()));
+                       },
                     child: Row(
                       children: [
                         Text(

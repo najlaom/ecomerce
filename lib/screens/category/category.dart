@@ -62,14 +62,14 @@ class _CategoryState extends State<Category> {
     if (categories.length > 0) {
       setState(() {
         categoryList = categories;
-        //nameCategory = categories[0]["name"].toString();
+        nameCategory = categories[0]["name"].toString();
         _fetchPrdByCat(categories[0]["id"].toString());
         //fetch Products of firs Cat
         // currentCat = cats[0]["id"];
       });
 
       print(categories.toString());
-      // _fetchcatProducts();
+      //_fetchcatProducts();
     } else {
       setState(() {
         categoryList = [];

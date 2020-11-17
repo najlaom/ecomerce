@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 class ProductService {
   String baseurl ="http://192.168.1.3:8085/";
+  static int idByCat;
   Future getProducts() async {
     //najlaaa
     var url = baseurl+'api/products/getAll';

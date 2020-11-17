@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartItemsBloc {
@@ -47,6 +49,8 @@ class CartItemsBloc {
   }
 
   Future<void> addToCart(item) {
+    print("item bloc");
+    print(item);
     bool found = false;
     if (allItems.length > 0) {
       for (var i = 0; i < allItems.length; i++) {
@@ -63,6 +67,44 @@ class CartItemsBloc {
     cartStreamController.sink.add(allItems);
   }
 
+  void removeFromCart(item) {
+    print ("remove iteme");
+    print(item);
+    if (allItems.length > 0) {
+      for (var i = 0; i < allItems.length; i++) {
+        if (allItems[i] != null && allItems[i]["id"] == item["id"] && allItems[i]["quantite"]> 1 ) {
+          print(allItems[i]["quantite"]);
+          allItems[i]["quantite"] = allItems[i]["quantite"]--;
+          print(allItems[i]["quantite"]--);
+
+          //allItems.removeAt(allItems[i]["quantite"]);
+          cartStreamController.sink.add(allItems);
+          _saveCart();
+          return;
+        }else if
+          (allItems[i]["quantite"] == 0){
+          allItems.removeAt(i);
+        }
+
+      }
+    }
+    // print("Qt: "+item.quantite.toString());
+    // allItems.remove(item);
+  }
+  void deletItem(item) {
+    if (allItems.length > 0) {
+      for (var i = 0; i < allItems.length; i++) {
+        if (allItems[i] != null && allItems[i]["id"] == item["id"]) {
+          allItems.removeAt(i);
+          cartStreamController.sink.add(allItems);
+          _saveCart();
+          return;
+        }
+      }
+    }
+    // print("Qt: "+item.quantite.toString());
+    // allItems.remove(item);
+  }
   void dispose() {
     cartStreamController.close(); // close our StreamController
   }
