@@ -12,12 +12,14 @@ class NetworkHandler
     url =formater(url);
     //user registre
     var response = await http.get(url);
-    if(response.statusCode == 200||response.statusCode == 201){
+    if(response.statusCode == 200 || response.statusCode == 201){
       log.i(response.body);
       return json.decode(response.body);
     }
+
     log.i(response.body);
     log.i(response.statusCode);
+    return response;
 
   }
 
@@ -27,9 +29,26 @@ class NetworkHandler
     var response = await http.post(url,
         headers: {"Content-Type": "application/json"},
         body: json.encode(body));
+    if(response.statusCode == 200 || response.statusCode == 201){
+      log.i(response.body);
+    }
     log.i(response.body);
     log.i(response.statusCode);
     return response;
+
+
+  }
+  Future getUser(String url,String token) async {
+    url =formater(url);
+    log.i(url);
+   String basicAuth = "Bearer "+token;
+    var response = await http.get(url,
+        headers: {'authorization': basicAuth});
+    if(response.statusCode == 200 || response.statusCode == 201){
+      log.i(response.body);
+      return json.decode(response.body);
+    }
+
 
 
   }

@@ -15,10 +15,10 @@ class CategoryService {
       //  print("aaaaaaaaaaaaaaaa");
       //   print(jsonResp.toString());
    // Najla   if (jsonResp["success"] == true && jsonResp["data"].length > 0) /////
-      if (jsonResp != null) {
+      if (jsonResp["success"] == true && jsonResp["data"].length > 0) {
         //   print(jsonResp["data"].toString());
         ///jsonResp["data"].sublist(1, 3);
-        return jsonResp;
+        return jsonResp["data"];
       } else
         return [];
     } else

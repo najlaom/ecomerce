@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:ecomerce/screens/compte/login_page.dart';
+import 'package:ecomerce/services/NetworkHandler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:logger/logger.dart';
 
 class Compte extends StatefulWidget {
+
   const Compte({
     Key key,
   }) : super(key: key);
@@ -13,19 +18,59 @@ class Compte extends StatefulWidget {
 }
 
 class _CompteState extends State<Compte> {
+   bool connected = false;
   bool loading = true;
   final Color divider = Colors.grey.shade600;
   final storage = new FlutterSecureStorage();
+  NetworkHandler networkHandler = NetworkHandler();
+  String bonjour="Bonjour!";
+  String connecter="Connectez-vous";
+
+  var log = Logger();
 
   void _loadData() async {
-    await Future.delayed(const Duration(seconds: 2));
+
+    await Future.delayed(const Duration(seconds: 4));
     setState(() {
       loading = false;
     });
+   String value =  await storage.read(key: "token");
+
+  //  String value =  await storage.read(key: "token");
+   // log.i(value);
+    if(value == null){
+
+      setState(() {
+        bonjour="Bonjour!";
+        connected =false;
+        connecter="Connectez-vous";
+      });
+    }else{
+
+
+
+      var response = await networkHandler.getUser("api/users/getUserById",value);
+      var user = response['user'];
+     var prenom = user['prenom'];
+     var nom =user['moumen'];
+        setState(() {
+          bonjour= bonjour="Bonjour "+prenom+"!";
+          connected =true;
+          connecter="Deconnectez-vous";
+        });
+
+
+
+    //  bonjour ="Bonjour ";
+
+
+    }
+
   }
 
   @override
   void initState() {
+
     _loadData();
     super.initState();
   }
@@ -83,7 +128,7 @@ class _CompteState extends State<Compte> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Bonjour!',
+                                bonjour,
                                 style: TextStyle(
                                     fontFamily: 'JosefinSans',
                                     fontWeight: FontWeight.bold,
@@ -91,7 +136,16 @@ class _CompteState extends State<Compte> {
                                     height: 1.5,
                                     color: Colors.white),
                               ),
-                              Row(
+                           connected ?Row(
+                             children: [
+                               SizedBox(
+                                 height: 35,
+                               ),
+                             ],
+
+
+
+                           ):   Row(
                                 children: [
                                   Text(
                                     "Merci d'insérer votre compte",
@@ -152,7 +206,7 @@ class _CompteState extends State<Compte> {
                             padding: EdgeInsets.all(8.0),
                             onPressed: () async {
                               String value =  await storage.read(key: "token");
-                              print(value);
+
                             },
                             child: Row(
                               children: [
@@ -178,7 +232,36 @@ class _CompteState extends State<Compte> {
                         Container(
                           child: FlatButton(
                             padding: EdgeInsets.all(8.0),
-                            onPressed: () {},
+                            onPressed: () async {
+                        var response = await    networkHandler.get("api/products/getByIdWithDetais/1");
+
+                        if(response.statusCode == 200||response.statusCode == 201){
+                          Map<String,dynamic> output = json.decode(response.body);
+                          print(output['features']);
+                          List<dynamic> features = output['features'] ;
+                          String feat ="";
+
+
+                    //      print(features[1]['name']+":"+features[1]['value']);
+                          for(var i = 0; i < features.length; i++){
+                            feat=feat+features[i]['name']+":"+features[1]['value']+"/n";
+
+
+                          }
+                          print(feat);
+
+                      // List first =  features[1] as List;
+
+                         print(features);
+                    //      List features = tagObjsJson.map((tagJson) => output.fromJson(tagJson)).toList();
+
+
+
+                        }
+
+
+
+                            },
                             child: Row(
                               children: [
                                 Icon(
@@ -187,7 +270,7 @@ class _CompteState extends State<Compte> {
                                 ),
                                 VerticalDivider(),
                                 Text(
-                                  "Flat Button",
+                                  "Test prodocut details",
                                   style: TextStyle(
                                     fontSize: 20.0,
                                     fontFamily: 'JosefinSans',
@@ -293,10 +376,24 @@ class _CompteState extends State<Compte> {
                           child: FlatButton(
                             textColor: Colors.orangeAccent,
                             padding: EdgeInsets.all(8.0),
-                            onPressed: () => Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => LoginPage())),
+                            onPressed: () async {
+                              if(!connected){
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (_) => LoginPage()));
+                              }else{
+                                await storage.write(key: "token", value:null);
+                                setState(() {
+                                  bonjour="Bonjour!";
+                                  connected =false;
+                                  connecter="Connectez-vous";
+                                });
+
+                              }
+
+                            }
+                            ,
                             child: Text(
-                              "Connectez-vous",
+                             connecter,
                               style: TextStyle(fontSize: 20.0),
                             ),
                           ),

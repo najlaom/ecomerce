@@ -15,11 +15,11 @@ class ProductService {
       var jsonResp = json.decode(searchResponse.body);
       //  print("aaaaaaaaaaaaaaaa");
       //  print(jsonResp.toString());
-      if (jsonResp!= null) {
+      if (jsonResp["success"] == true && jsonResp["data"].length > 0) {
         //   print(jsonResp["data"].toString());
         ///jsonResp["data"].sublist(1, 3);
         /////najla
-        return jsonResp;
+        return jsonResp["data"];
       } else
         return [];
     } else
@@ -70,10 +70,10 @@ class ProductService {
       var jsonproductByDetails = json.decode(productByDetaills.body);
       print("aaaaaaaaaaaaaaaa");
       print(jsonproductByDetails.toString());
-      if (jsonproductByDetails != null) {
+      if (jsonproductByDetails["success"] == true &&
+          jsonproductByDetails["data"].length > 0) {
         print(jsonproductByDetails.toString());
-        //najla
-        return jsonproductByDetails;
+        return jsonproductByDetails["data"];
       } else
         return [];
     } else
