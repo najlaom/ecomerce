@@ -1,4 +1,5 @@
 import 'package:ecomerce/models/model.dart';
+import 'package:ecomerce/screens/commande/livraison.dart';
 import 'package:ecomerce/services/bloc/cart_items.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,19 +13,32 @@ final priceTextStyle = TextStyle(
 );
 
 class AddProduct extends StatefulWidget {
+  final product;
   String idProduct;
-  AddProduct({this.idProduct});
+  AddProduct({this.idProduct, this.product});
   @override
   _AddProductState createState() => _AddProductState();
 }
 
 class _AddProductState extends State<AddProduct> {
   List cartContent = [];
+  double total = 0;
 
   @override
   void initState() {
     super.initState();
     cartContent = bloc.allItems;
+    calculTotal();
+  }
+
+  calculTotal() {
+    double tmp = 0;
+    bloc.allItems.forEach((prdt) {
+      tmp += prdt["quantite"] * prdt["prix"];
+    });
+    setState(() {
+      total = tmp;
+    });
   }
 
   @override
@@ -32,10 +46,11 @@ class _AddProductState extends State<AddProduct> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(
-          color: Colors.black,
+        backgroundColor: Colors.black87,
+        title: Text(
+          'Panier',
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
         ),
       ),
       extendBody: true,
@@ -59,19 +74,10 @@ class _AddProductState extends State<AddProduct> {
               16.0,
             ),
             children: [
-              Text(
-                "My Order",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 30.0),
               ...cartContent
                   .map((e) => Column(
                         children: [
-                          OrderListItem(product: e),
+                          _buildProduct(e),
                           const SizedBox(height: 20.0),
                         ],
                       ))
@@ -82,30 +88,12 @@ class _AddProductState extends State<AddProduct> {
                 children: [
                   const SizedBox(width: 40.0),
                   Text(
-                    "VAT (10%)",
-                    style: priceTextStyle,
-                  ),
-                  Spacer(),
-                  Text(
-                    "\$2",
-                    style: priceTextStyle,
-                  ),
-                  const SizedBox(width: 20.0),
-                ],
-              ),
-              const SizedBox(height: 20.0),
-              _buildDivider(),
-              const SizedBox(height: 10.0),
-              Row(
-                children: [
-                  const SizedBox(width: 40.0),
-                  Text(
                     "Total",
                     style: priceTextStyle.copyWith(color: Colors.black),
                   ),
                   Spacer(),
                   Text(
-                    "\$49",
+                    "\$$total",
                     style: priceTextStyle.copyWith(color: Colors.indigo),
                   ),
                   const SizedBox(width: 20.0),
@@ -122,13 +110,19 @@ class _AddProductState extends State<AddProduct> {
                       borderRadius: BorderRadius.circular(15.0)),
                   color: Colors.yellow.shade700,
                   child: Text(
-                    "Next",
+                    "validez la commande".toUpperCase(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                       fontSize: 18.0,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Livraison()),
+                    );
+                  },
                 ),
               ),
             ],
@@ -148,31 +142,8 @@ class _AddProductState extends State<AddProduct> {
       ),
     );
   }
-}
 
-class OrderItem {
-  final String title;
-  final int qty;
-  final double price;
-  final String image;
-  final Color bgColor;
-  OrderItem({this.title, this.qty, this.price, this.image, this.bgColor});
-}
-
-class OrderListItem extends StatefulWidget {
-  final product;
-
-  const OrderListItem({Key key, this.product}) : super(key: key);
-
-  @override
-  _OrderListItemState createState() => _OrderListItemState();
-}
-
-class _OrderListItemState extends State<OrderListItem> {
-  int numOfItems = 1;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildProduct(product) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
@@ -185,9 +156,9 @@ class _OrderListItemState extends State<OrderListItem> {
               color: Colors.deepOrange,
               borderRadius: BorderRadius.circular(20.0),
             ),
-            child: widget.product['image'] != null
+            child: product['image'] != null
                 ? Image.network(
-                    "http://192.168.1.3:8085/image/" + widget.product['image'],
+                    "http://192.168.1.3:8085/image/" + product['image'],
                     fit: BoxFit.cover,
                   )
                 : null,
@@ -199,7 +170,7 @@ class _OrderListItemState extends State<OrderListItem> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  widget.product['name'],
+                  product['name'],
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0,
@@ -224,14 +195,15 @@ class _OrderListItemState extends State<OrderListItem> {
                         padding: const EdgeInsets.all(2.0),
                         icon: Icon(Icons.remove),
                         onPressed: () {
+                          bloc.removeFromProduct(product);
                           setState(() {
-                            bloc.removeFromCart(widget.product);
+                            calculTotal();
+                            cartContent = bloc.allItems;
                           });
                         },
                       ),
                       Text(
-                        "${widget.product['quantite']}",
-
+                        "${product['quantite']}",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -243,10 +215,10 @@ class _OrderListItemState extends State<OrderListItem> {
                         padding: const EdgeInsets.all(2.0),
                         icon: Icon(Icons.add),
                         onPressed: () {
+                          bloc.addToCart(product);
                           setState(() {
-                            bloc.addToCart(widget.product);
-                            print(widget.product['quantite']);
-                            print(widget.product);
+                            calculTotal();
+                            cartContent = bloc.allItems;
                           });
                         },
                       ),
@@ -260,7 +232,7 @@ class _OrderListItemState extends State<OrderListItem> {
           Column(
             children: [
               Text(
-                "\$${widget.product['prix'] * widget.product['quantite']}",
+                "\$${product['prix'] * product['quantite']}",
                 style: priceTextStyle,
               ),
               IconButton(
@@ -268,8 +240,10 @@ class _OrderListItemState extends State<OrderListItem> {
                 padding: const EdgeInsets.all(2.0),
                 icon: Icon(Icons.delete),
                 onPressed: () {
+                  bloc.deletItem(product);
                   setState(() {
-                    bloc.deletItem(widget.product);
+                    calculTotal();
+                    cartContent = bloc.allItems;
                   });
                 },
               ),

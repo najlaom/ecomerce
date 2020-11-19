@@ -67,7 +67,7 @@ class CartItemsBloc {
     cartStreamController.sink.add(allItems);
   }
 
-  void removeFromCart(item) {
+  void removeFromProduct(item) {
     print ("remove iteme");
     print(item);
     if (allItems.length > 0) {
@@ -97,7 +97,7 @@ class CartItemsBloc {
         if (allItems[i] != null && allItems[i]["id"] == item["id"]) {
           allItems.removeAt(i);
           cartStreamController.sink.add(allItems);
-          _saveCart();
+          emptyCart();
           return;
         }
       }
@@ -107,6 +107,22 @@ class CartItemsBloc {
   }
   void dispose() {
     cartStreamController.close(); // close our StreamController
+  }
+  void minuxFromCart(item) {
+    if (allItems.length > 0) {
+      for (var i = 0; i < allItems.length; i++) {
+        if (allItems[i] != null && allItems[i]["id"] == item["id"]) {
+          allItems[i]["quantite"]--;
+          if (allItems[i]["quantite"] <= 0) {
+            allItems.remove(item);
+            break;
+          }
+        }
+      }
+    }
+
+    cartStreamController.sink.add(allItems);
+    _saveCart();
   }
 }
 

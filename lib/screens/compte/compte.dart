@@ -35,9 +35,9 @@ class _CompteState extends State<Compte> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      initialData: bloc.allItems,
+        initialData: bloc.allItems,
         stream: bloc.getStream,
-        builder: (context, snapshot){
+        builder: (context, snapshot) {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.black87,
@@ -59,33 +59,34 @@ class _CompteState extends State<Compte> {
                   child: Center(
                     child: Stack(
                       children: [
-                    IconButton(
-                    icon: Icon(
-                    Icons.shopping_cart_outlined,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddProduct()),
-                      );
-                    },
-                  ),
-                        bloc.allItems.length>0 ?
-                            Positioned(
+                        IconButton(
+                          icon: Icon(
+                            Icons.shopping_cart_outlined,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddProduct()),
+                            );
+                          },
+                        ),
+                        bloc.allItems.length > 0
+                            ? Positioned(
                                 child: Container(
-                                  decoration: new BoxDecoration(
-                                    color: Colors.orange.shade700,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  padding: EdgeInsets.all(5.0),
-                                  child: Text(
-                                    bloc.allItems.length.toString(),
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.white),
-                                  ),
-                            )): Container()
+                                decoration: new BoxDecoration(
+                                  color: Colors.orange.shade700,
+                                  shape: BoxShape.circle,
+                                ),
+                                padding: EdgeInsets.all(5.0),
+                                child: Text(
+                                  bloc.allItems.length.toString(),
+                                  style: TextStyle(
+                                      fontSize: 14, color: Colors.white),
+                                ),
+                              ))
+                            : Container()
                       ],
                     ),
                   ),
@@ -96,247 +97,251 @@ class _CompteState extends State<Compte> {
               child: loading
                   ? CircularProgressIndicator()
                   : Stack(
-                children: <Widget>[
-                  ClipPath(
-                    clipper: DiagonalPathClipperOne(),
-                    child: Container(
-                      height: 110,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  SafeArea(
-                    child: Column(
                       children: <Widget>[
-                        Container(
-                          padding:
-                          EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                        ClipPath(
+                          clipper: DiagonalPathClipperOne(),
+                          child: Container(
+                            height: 110,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        SafeArea(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Bonjour!',
-                                style: TextStyle(
+                            children: <Widget>[
+                              Container(
+                                padding: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Bonjour!',
+                                      style: TextStyle(
+                                          fontFamily: 'JosefinSans',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18.0,
+                                          height: 1.5,
+                                          color: Colors.white),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Merci d'insérer votre compte",
+                                          style: TextStyle(
+                                              fontFamily: 'JosefinSans',
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 15.0,
+                                              color: Colors.white),
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Container(
+                                          child: FlatButton(
+                                            color: Colors.orangeAccent,
+                                            textColor: Colors.white,
+                                            padding: EdgeInsets.all(7.0),
+                                            splashColor: Colors.blueAccent,
+                                            onPressed: () => Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        LoginPage())),
+                                            child: Text(
+                                              "Connectez-vous",
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                fontFamily: 'JosefinSans',
+                                                fontWeight: FontWeight.w400,
+                                                height: 1.5,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: 30,
+                                alignment: Alignment.centerLeft,
+                                padding: EdgeInsets.only(left: 20.0),
+                                child: Text(
+                                  'MON COMPTE',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
                                     fontFamily: 'JosefinSans',
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 18.0,
                                     height: 1.5,
-                                    color: Colors.white),
+                                  ),
+                                ),
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Merci d'insérer votre compte",
-                                    style: TextStyle(
-                                        fontFamily: 'JosefinSans',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15.0,
-                                        color: Colors.white),
-                                  ),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Container(
-                                    child: FlatButton(
-                                      color: Colors.orangeAccent,
-                                      textColor: Colors.white,
-                                      padding: EdgeInsets.all(7.0),
-                                      splashColor: Colors.blueAccent,
-                                      onPressed: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) => LoginPage())),
-                                      child: Text(
-                                        "Connectez-vous",
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              Container(
+                                child: FlatButton(
+                                  padding: EdgeInsets.all(8.0),
+                                  onPressed: () async {
+                                    String value =
+                                        await storage.read(key: "token");
+                                    print(value);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      VerticalDivider(),
+                                      Text(
+                                        "Get Token",
                                         style: TextStyle(
-                                          fontSize: 16.0,
+                                          fontSize: 20.0,
                                           fontFamily: 'JosefinSans',
                                           fontWeight: FontWeight.w400,
                                           height: 1.5,
                                         ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
+                                ),
+                              ),
+                              Divider(),
+                              Container(
+                                child: FlatButton(
+                                  padding: EdgeInsets.all(8.0),
+                                  onPressed: () {},
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      VerticalDivider(),
+                                      Text(
+                                        "Flat Button",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: 'JosefinSans',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Divider(),
+                              Container(
+                                child: FlatButton(
+                                  padding: EdgeInsets.all(8.0),
+                                  onPressed: () {},
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      VerticalDivider(),
+                                      Text(
+                                        "Flat Button",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: 'JosefinSans',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                padding: EdgeInsets.only(left: 20.0),
+                                width: 400,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).hoverColor,
+                                ),
+                                child: Text("Mes Paramétres"),
+                              ),
+                              Container(
+                                child: FlatButton(
+                                  padding: EdgeInsets.all(8.0),
+                                  onPressed: () {},
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      VerticalDivider(),
+                                      Text(
+                                        "Flat Button",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: 'JosefinSans',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Divider(),
+                              Container(
+                                child: FlatButton(
+                                  padding: EdgeInsets.all(8.0),
+                                  onPressed: () {},
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      VerticalDivider(),
+                                      Text(
+                                        "Flat Button",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontFamily: 'JosefinSans',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                alignment: Alignment.topCenter,
+                                padding: EdgeInsets.only(left: 20.0),
+                                width: 400,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).hoverColor,
+                                ),
+                                child: FlatButton(
+                                  textColor: Colors.orangeAccent,
+                                  padding: EdgeInsets.all(8.0),
+                                  onPressed: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => LoginPage())),
+                                  child: Text(
+                                    "Connectez-vous",
+                                    style: TextStyle(fontSize: 20.0),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ),
-                        Container(
-                          height: 30,
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.only(left: 20.0),
-                          child: Text(
-                            'MON COMPTE',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              fontFamily: 'JosefinSans',
-                              fontWeight: FontWeight.bold,
-                              height: 1.5,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        Container(
-                          child: FlatButton(
-                            padding: EdgeInsets.all(8.0),
-                            onPressed: () async {
-                              String value =  await storage.read(key: "token");
-                              print(value);
-                            },
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                VerticalDivider(),
-                                Text(
-                                  "Get Token",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: 'JosefinSans',
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(),
-                        Container(
-                          child: FlatButton(
-                            padding: EdgeInsets.all(8.0),
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                VerticalDivider(),
-                                Text(
-                                  "Flat Button",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: 'JosefinSans',
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(),
-                        Container(
-                          child: FlatButton(
-                            padding: EdgeInsets.all(8.0),
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                VerticalDivider(),
-                                Text(
-                                  "Flat Button",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: 'JosefinSans',
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.only(left: 20.0),
-                          width: 400,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).hoverColor,
-                          ),
-                          child: Text("Mes Paramétres"),
-                        ),
-                        Container(
-                          child: FlatButton(
-                            padding: EdgeInsets.all(8.0),
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                VerticalDivider(),
-                                Text(
-                                  "Flat Button",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: 'JosefinSans',
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(),
-                        Container(
-                          child: FlatButton(
-                            padding: EdgeInsets.all(8.0),
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                VerticalDivider(),
-                                Text(
-                                  "Flat Button",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: 'JosefinSans',
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.topCenter,
-                          padding: EdgeInsets.only(left: 20.0),
-                          width: 400,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).hoverColor,
-                          ),
-                          child: FlatButton(
-                            textColor: Colors.orangeAccent,
-                            padding: EdgeInsets.all(8.0),
-                            onPressed: () => Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => LoginPage())),
-                            child: Text(
-                              "Connectez-vous",
-                              style: TextStyle(fontSize: 20.0),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
-                  ),
-                ],
-              ),
             ),
           );
         });
