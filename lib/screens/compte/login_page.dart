@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:ecomerce/main_navigation.dart';
 import 'package:ecomerce/screens/compte/compte.dart';
 import 'package:ecomerce/screens/compte/register_page.dart';
 import 'package:ecomerce/services/NetworkHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:logger/logger.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,6 +16,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> _formKey = GlobalKey();
   bool isEnabled = true;
+  bool validate =false;
+  bool validatePass =false;
+  String errorText;
+  String errorTextPass;
+  bool circular = false;
+  var log = Logger();
   final Color divider = Colors.black;
   TextEditingController emailController =TextEditingController();
   TextEditingController paswwordController =TextEditingController();
@@ -72,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                         controller: emailController,
                         decoration: InputDecoration(
                           hintText: "Email",
+                          errorText: validate?null:errorText,
                           //add icon outside input field
                           icon: Icon(Icons.mail_outline),
                         ),
@@ -86,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: true,
                         decoration: InputDecoration(
                           hintText: "Mot de passe",
+                          errorText: validatePass?null:errorTextPass,
                           //add icon outside input field
                           icon: Icon(Icons.lock_open_sharp),
                           suffixIcon: Icon(Icons.remove_red_eye),
@@ -113,6 +123,9 @@ class _LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.all(8.0),
                         color: Colors.orangeAccent,
                         onPressed: () async {
+                          await checkUser();
+                          await checkPass();
+                          if(_formKey.currentState.validate() && validate && validatePass){
                           Map<String,String>data={
                             "email":emailController.text,
                             "password":paswwordController.text,
@@ -124,22 +137,21 @@ class _LoginPageState extends State<LoginPage> {
                           var response=  await networkHandler.post("api/users/login", data);
                           if(response.statusCode == 200||response.statusCode == 201){
                             Map<String,dynamic> output = json.decode(response.body);
+                            log.i("hereeee");
+                            log.i(output);
                             print(output['token']);
                             await storage.write(key: "token", value: output['token']);
                             /*  Navigator.push(
                                 context, MaterialPageRoute(builder: (_) => Compte())); */
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> Compte(),), (route) => false);
 
-
-                          }else{
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => MainNavigation(par: 2,)), (route) => false);
 
 
                           }
-                          Navigator.push(
-                              context, MaterialPageRoute(builder: (_) => Compte()));
 
 
-                        },
+
+                          }},
                         child: Text(
                           "Connectez-vous",
                           style: TextStyle(
@@ -282,6 +294,80 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+  checkUser()async{
+    if(emailController.text.length == 0){
+      setState(() {
+        //  circular=false;
+        validate =false;
+        errorText ="Le champ email est vide";
+
+      });
+    }else if(!isEmail(emailController.text)){
+      setState(() {
+        //  circular=false;
+        validate =false;
+        errorText ="invalide email";
+        log.i(isEmail(emailController.text));
+
+      });
+
+    }
+    else{
+      var response = await networkHandler.get("api/users/checkUser/${emailController.text}");
+      if(!response['status']){
+        setState(() {
+          //   circular=false;
+          validate =false;
+          errorText ="compte introuvable ";
+          log.i(isEmail(emailController.text));
+
+        });
+      }else{
+        validate =true;
+      }
+    }
+
+  }
+  checkPass() async{
+    if(paswwordController.text.length == 0){
+      setState(() {
+        //  circular=false;
+        validate =false;
+        errorTextPass ="Le champ password est vide";
+
+      });
+    }else{
+      Map<String,String>data={
+        "email":emailController.text,
+        "password":paswwordController.text,
+
+      };
+      var response = await networkHandler.post("api/users/checkPass",data);
+      var output = json.decode(response.body);
+      if(!output['status']){
+        setState(() {
+          //   circular=false;
+          validatePass =false;
+          errorTextPass ="mot de passe incorrectte ! ";
+
+
+        });
+      }else{
+        validatePass =true;
+      }
+
+
+    }
+
+  }
+  bool isEmail(String em) {
+
+    String p = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+    RegExp regExp = new RegExp(p);
+
+    return regExp.hasMatch(em);
   }
 
   Divider _buildDivider() {

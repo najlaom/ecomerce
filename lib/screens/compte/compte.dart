@@ -5,6 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:logger/logger.dart';
+import 'package:ecomerce/services/NetworkHandler.dart';
+import 'dart:convert';
 
 class Compte extends StatefulWidget {
   const Compte({
@@ -15,15 +18,54 @@ class Compte extends StatefulWidget {
 }
 
 class _CompteState extends State<Compte> {
+  bool connected = false;
   bool loading = true;
   final Color divider = Colors.grey.shade600;
   final storage = new FlutterSecureStorage();
+  NetworkHandler networkHandler = NetworkHandler();
+  String bonjour="Bonjour!";
+  String connecter="Connectez-vous";
+
+  var log = Logger();
 
   void _loadData() async {
     await Future.delayed(const Duration(seconds: 2));
     setState(() {
       loading = false;
     });
+    //nidh
+    String value =  await storage.read(key: "token");
+
+    //  String value =  await storage.read(key: "token");
+    // log.i(value);
+    if(value == null){
+
+      setState(() {
+        bonjour="Bonjour!";
+        connected =false;
+        connecter="Connectez-vous";
+      });
+    }else{
+
+
+
+      var response = await networkHandler.getUser("api/users/getUserById",value);
+      var user = response['user'];
+      var prenom = user['prenom'];
+     // var nom =user['moumen'];
+      setState(() {
+        bonjour= bonjour="Bonjour "+prenom+"!";
+        connected =true;
+        connecter="Deconnectez-vous";
+      });
+
+
+
+      //  bonjour ="Bonjour ";
+
+
+    }
+    //nidh
   }
 
   @override
@@ -115,7 +157,8 @@ class _CompteState extends State<Compte> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Bonjour!',
+                                     // 'Bonjour!',
+                                      bonjour,
                                       style: TextStyle(
                                           fontFamily: 'JosefinSans',
                                           fontWeight: FontWeight.bold,
@@ -123,7 +166,16 @@ class _CompteState extends State<Compte> {
                                           height: 1.5,
                                           color: Colors.white),
                                     ),
-                                    Row(
+                                    connected ?Row(
+                                      children: [
+                                        SizedBox(
+                                          height: 35,
+                                        ),
+                                      ],
+
+
+
+                                    ):   Row(
                                       children: [
                                         Text(
                                           "Merci d'insérer votre compte",
@@ -327,12 +379,24 @@ class _CompteState extends State<Compte> {
                                 child: FlatButton(
                                   textColor: Colors.orangeAccent,
                                   padding: EdgeInsets.all(8.0),
-                                  onPressed: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => LoginPage())),
+                                  onPressed: () async {
+                                    if(!connected){
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (_) => LoginPage()));
+                                    }else{
+                                      await storage.write(key: "token", value:null);
+                                      setState(() {
+                                        bonjour="Bonjour!";
+                                        connected =false;
+                                        connecter="Connectez-vous";
+                                      });
+
+                                    }
+
+                                  }
+                                  ,
                                   child: Text(
-                                    "Connectez-vous",
+                                    connecter,
                                     style: TextStyle(fontSize: 20.0),
                                   ),
                                 ),

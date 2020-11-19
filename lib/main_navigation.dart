@@ -2,14 +2,32 @@ import 'package:ecomerce/screens/screen.dart';
 import 'package:flutter/material.dart';
 
 class MainNavigation extends StatefulWidget {
+  //nidh
+  final int par;
+
+  const MainNavigation({
+    Key key, this.par,
+  }) : super(key: key);
+  //nidh
   @override
   _MainNavigationState createState() => _MainNavigationState();
 }
 
 class _MainNavigationState extends State<MainNavigation> {
-  int _currentIndex = 0;
+  int _currentIndex ;
   final items = <Widget>[Home(), Category(), Compte(), Aide()];
   //test  initi
+  //nidh
+  @override
+  void initState() {
+
+    _currentIndex=widget.par;
+
+    super.initState();
+  }
+
+
+  //nidh
   @override
   Widget build(BuildContext context) {
     return Scaffold(

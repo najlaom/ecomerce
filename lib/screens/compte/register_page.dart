@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:ecomerce/screens/screen.dart';
 import 'package:ecomerce/services/NetworkHandler.dart';
+import 'package:logger/logger.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -20,7 +21,13 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController adresseController =TextEditingController();
 
   GlobalKey<FormState> _formKey = GlobalKey();
-  bool isEnabled = true;
+  bool isEnabled = false;
+  bool vis =true;
+  bool validate =false;
+  String errorText;
+  String errorPassText;
+  bool circular = false;
+  var log = Logger();
   final Color divider = Colors.black;
   NetworkHandler networkHandler = NetworkHandler();
   enableButton() {
@@ -71,9 +78,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     Container(
                       padding: EdgeInsets.all(20.0),
                       width: 400,
-                      child: TextField(
+                      child: TextFormField(
                         // controller: _textFieldController,
                         controller: prenomController,
+                        validator:(value){
+                          if(value.isEmpty){
+                            return "le champ prénom est vide";
+                            //user name unique
+
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           hintText: "Prénom",
                           icon: Icon(Icons.person),
@@ -83,9 +98,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     Container(
                       padding: EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
                       width: 400,
-                      child: TextField(
+                      child: TextFormField(
                         // controller: _textFieldController,
                         controller: nomController,
+                        validator:(value){
+                          if(value.isEmpty){
+                            return "le champ nom est vide";
+                            //user name unique
+
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           hintText: "Nom",
                           //add icon outside input field
@@ -96,10 +119,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     Container(
                       padding: EdgeInsets.only(bottom: 20.0, left: 20.0, right: 20.0),
                       width: 400,
-                      child: TextField(
+                      child: TextFormField(
                         controller: emailController,
                         // controller: _textFieldController,
                         decoration: InputDecoration(
+                          errorText: validate?null:errorText,
                           hintText: "Email",
                           //add icon outside input field
                           icon: Icon(Icons.mail_outline),
@@ -110,15 +134,31 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: EdgeInsets.only(
                           bottom: 20.0, left: 20.0, right: 20.0),
                       width: 400,
-                      child: TextField(
+                      child: TextFormField(
                         controller: paswwordController,
-                        obscureText: true,
+                        validator:(value){
+                          if(value.isEmpty){
+                            return "le champ mot de passe est vide";
+                            //user name unique
+
+                          }
+                          return null;
+                        },
+                        obscureText: vis,
                         // controller: _textFieldController,
                         decoration: InputDecoration(
+                          helperText: "mot de passe comporte de 4 à 8 caractères",
+                          helperStyle: TextStyle(
+                              fontSize: 16
+                          ),
                           hintText: "Mot de passe",
                           //add icon outside input field
                           icon: Icon(Icons.lock_open_sharp),
-                          suffixIcon: Icon(Icons.remove_red_eye),
+                          suffixIcon: IconButton(icon: Icon(vis ? Icons.visibility_off : Icons.visibility),onPressed: (){
+                            setState(() {
+                              vis = !vis;
+                            });
+                          },),
                         ),
                       ),
                     ),
@@ -126,27 +166,43 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: EdgeInsets.only(
                           bottom: 20.0, left: 20.0, right: 20.0),
                       width: 400,
-                      child: IntlPhoneField(
+                      child: TextFormField(
                         controller: phoneController,
+                        keyboardType: TextInputType.number,
+                        validator:(value){
+                          if(value.isEmpty){
+                            return "le champ phone est vide";
+                            //user name unique
+
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           labelText: 'Phone Number',
+                            icon: Icon(Icons.phone)
                         ),
-                        onChanged: (phone) {
-                          print(phone.completeNumber);
-                        },
+
                       ),
                     ),
                     Container(
                       padding: EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
                       width: 400,
-                      child: IntlPhoneField(
+                      child: TextFormField(
                         controller: phone2Controller,
+                        keyboardType: TextInputType.number,
+                        validator:(value){
+                          if(value.isEmpty){
+                            return "le champ phone 2 est vide";
+                            //user name unique
+
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           labelText: 'Phone Number 2',
+                            icon: Icon(Icons.phone)
                         ),
-                        onChanged: (phone) {
-                          print(phone.completeNumber);
-                        },
+
 
                       ),
                     ),
@@ -155,8 +211,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     Container(
                       padding: EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
                       width: 400,
-                      child: TextField(
+                      child: TextFormField(
                         controller: villeController,
+                        validator:(value){
+                          if(value.isEmpty){
+                            return "le champ ville est vide";
+                            //user name unique
+
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           hintText: "Ville",
                           //add icon outside input field
@@ -168,8 +232,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     Container(
                       padding: EdgeInsets.only(bottom: 50.0, left: 20.0,right: 20.0),
                       width: 400,
-                      child: TextField(
+                      child: TextFormField(
                         controller: regionController,
+                        validator:(value){
+                          if(value.isEmpty){
+                            return "le champ region est vide";
+                            //user name unique
+
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           hintText: "Region",
                           //add icon outside input field
@@ -181,8 +253,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     Container(
                       padding: EdgeInsets.only(bottom: 20.0, left: 20.0,right: 20.0),
                       width: 400,
-                      child: TextField(
+                      child: TextFormField(
                         controller: adresseController,
+                        validator:(value){
+                          if(value.isEmpty){
+                            return "le champ adresse est vide";
+                            //user name unique
+
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                           hintText: "Adresse",
                           //add icon outside input field
@@ -197,35 +277,58 @@ class _RegisterPageState extends State<RegisterPage> {
                         color: Colors.orangeAccent,
 
                         onPressed: () async {
+                          setState(() {
+                            circular=true;
+                          });
+                          await checkUser();
+                          if(_formKey.currentState.validate() && validate){
+                            Map<String,String>data={
+                              "email":emailController.text,
+                              "password":paswwordController.text,
+                              "phone":phoneController.text,
+                              "nom" : nomController.text,
+                              "prenom":prenomController.text,
+                              "ville":villeController.text,
+                              "region" : regionController.text,
+                              "phoneTwo":phone2Controller.text,
+                              "adress":adresseController.text,
+
+                            };
+                            //  print(data);
+
+                            //networkHandler.get("api/products/getAll");
+                            await  networkHandler.post("api/users/singUp", data);
+                            setState(() {
+                              circular=false;
+                            });
+                            /*    Navigator.push(context, MaterialPageRoute(builder: (_) => Compte()));*/
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => Compte()), (route) => false);
+
+                          }else{
+                            setState(() {
+                              circular =false;
+                            });
+                          }
 
 
-                          Map<String,String>data={
-                            "email":emailController.text,
-                            "password":paswwordController.text,
-                            "phone":phoneController.text,
-                            "nom" : nomController.text,
-                            "prenom":prenomController.text,
-                            "ville":villeController.text,
-                            "region" : regionController.text,
-                            "phoneTwo":phone2Controller.text,
-                            "adress":adresseController.text,
 
-                          };
-                          print(data);
-
-                          //networkHandler.get("api/products/getAll");
-                          await  networkHandler.post("api/users/singUp", data);
-                          /*    Navigator.push(
-                              context, MaterialPageRoute(builder: (_) => Compte()));*/
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => Compte()), (route) => false);
                         },
-                        child: Text(
-                          "Créer",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontFamily: 'JosefinSans',
-                            fontWeight: FontWeight.w400,
-                            height: 1.5,
+                        child:circular? CircularProgressIndicator() :Container(
+                          width: 150,
+                          height: 30,
+                          padding: EdgeInsets.only(left: 10.0,right: 10.0),
+                          // margin: EdgeInsets.all(20),
+
+                          child: Center(
+                            child: Text(
+                              "Créer",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontFamily: 'JosefinSans',
+                                fontWeight: FontWeight.w400,
+                                height: 1.5,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -236,6 +339,63 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+  checkUser()async{
+    if(emailController.text.length == 0){
+      setState(() {
+        //  circular=false;
+        validate =false;
+        errorText ="Le champ email est vide";
+
+      });
+    }else if(!isEmail(emailController.text)){
+      setState(() {
+        //  circular=false;
+        validate =false;
+        errorText ="invalide email";
+        log.i(isEmail(emailController.text));
+
+      });
+
+    }
+    else{
+      var response = await networkHandler.get("api/users/checkUser/${emailController.text}");
+      if(response['status']){
+        setState(() {
+          //   circular=false;
+          validate =false;
+          errorText ="email dija utilisé ";
+          log.i(isEmail(emailController.text));
+
+        });
+      }else{
+        validate =true;
+      }
+    }
+
+  }
+
+  checkPass() async{
+    if(paswwordController.text.length == 0){
+      setState(() {
+        //  circular=false;
+        validate =false;
+        errorPassText ="Le champ email est vide";
+
+      });
+    }else{
+
+
+    }
+
+  }
+  bool isEmail(String em) {
+
+    String p = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+    RegExp regExp = new RegExp(p);
+
+    return regExp.hasMatch(em);
   }
 
   Divider _buildDivider() {
