@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 class NetworkHandler
 
 {
-  String baseurl ="http://10.0.2.2:8080/";
+  String baseurl ="http://192.168.1.4:8085/";
   var log = Logger();
   Future get(String url) async {
     url =formater(url);
@@ -30,6 +30,20 @@ class NetworkHandler
     log.i(response.body);
     log.i(response.statusCode);
     return response;
+
+
+  }
+  Future getUser(String url,String token) async {
+    url =formater(url);
+    log.i(url);
+    String basicAuth = "Bearer "+token;
+    var response = await http.get(url,
+        headers: {'authorization': basicAuth});
+    if(response.statusCode == 200 || response.statusCode == 201){
+      log.i(response.body);
+      return json.decode(response.body);
+    }
+
 
 
   }

@@ -1,12 +1,16 @@
 import 'package:ecomerce/screens/category/product.dart';
 import 'package:ecomerce/screens/product/list_product.dart';
+import 'package:ecomerce/screens/product/list_product_by_category.dart';
+import 'package:ecomerce/services/product_service.dart';
 import 'package:ecomerce/widgets/network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductItem extends StatefulWidget {
   String nameCategory;
+  int idByCategory;
   var prdList;
-  ProductItem({this.nameCategory, this.prdList});
+  ProductItem({this.nameCategory, this.prdList, this.idByCategory});
 
   @override
   _ProductItemState createState() => _ProductItemState();
@@ -33,6 +37,7 @@ class _ProductItemState extends State<ProductItem> {
           alignment: Alignment.center,
           padding: EdgeInsets.only(left: 8.0, right: 8.0),
           child: Row(
+            mainAxisAlignment:  MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 this.widget.nameCategory,
@@ -46,13 +51,14 @@ class _ProductItemState extends State<ProductItem> {
               Container(
                 //alignment: Alignment.centerLeft,
                 child: FlatButton(
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => ListProduct())),
+                    onPressed: ()
+                       {
+                      // ProductService.idByCat = this.widget.idByCategory,
+                       Navigator.push(context,
+                       MaterialPageRoute(builder: (_) => ListProductByCategory()));
+                       },
                     child: Row(
                       children: [
-                        SizedBox(
-                          width: 100,
-                        ),
                         Text(
                           'Voir tout',
                           textAlign: TextAlign.center,
@@ -69,7 +75,7 @@ class _ProductItemState extends State<ProductItem> {
         Divider(),
         Container(
             padding: EdgeInsets.only(left: 3.0),
-            height: 200,
+            height: 500,
             child: Column(
               children: [Product(prdList: this.widget.prdList)],
             )),

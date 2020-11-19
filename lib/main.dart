@@ -11,7 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Ecomerce",
-      home: MainNavigation(),
+      //nidh
+      home: MainNavigation(par: 0,),
+      //nidh
     );
   }
 }

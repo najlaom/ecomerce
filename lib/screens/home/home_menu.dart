@@ -15,6 +15,7 @@ class _HomeMenuState extends State<HomeMenu> {
       height: 180,
       child: GridView.count(
         crossAxisCount: 4,
+        physics: NeverScrollableScrollPhysics(),
         children: List.generate(categories.length, (index) {
           return GestureDetector(
             onTap: () {},

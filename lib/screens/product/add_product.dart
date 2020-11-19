@@ -1,4 +1,7 @@
 import 'package:ecomerce/models/model.dart';
+import 'package:ecomerce/screens/commande/livraison.dart';
+import 'package:ecomerce/services/bloc/cart_items.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecomerce/components/assets.dart';
 import 'package:ecomerce/components/colors.dart';
@@ -9,18 +12,45 @@ final priceTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-class MyOrderPage extends StatelessWidget {
-  static final String path = "lib/src/pages/food/food_checkout.dart";
+class AddProduct extends StatefulWidget {
+  final product;
+  String idProduct;
+  AddProduct({this.idProduct, this.product});
+  @override
+  _AddProductState createState() => _AddProductState();
+}
+
+class _AddProductState extends State<AddProduct> {
+  List cartContent = [];
+  double total = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    cartContent = bloc.allItems;
+    calculTotal();
+  }
+
+  calculTotal() {
+    double tmp = 0;
+    bloc.allItems.forEach((prdt) {
+      tmp += prdt["quantite"] * prdt["prix"];
+    });
+    setState(() {
+      total = tmp;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(
-          color: Colors.black,
+        backgroundColor: Colors.black87,
+        title: Text(
+          'Panier',
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
         ),
       ),
       extendBody: true,
@@ -44,65 +74,16 @@ class MyOrderPage extends StatelessWidget {
               16.0,
             ),
             children: [
-              Text(
-                "My Order",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 30.0),
-              OrderListItem(
-                product: CategoryProduct(
-                  title: "gggggggg",
-                  qty: 2,
-                  price: "12",
-                  color: Colors.deepOrange,
-                  image: images[0],
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              OrderListItem(
-                product: CategoryProduct(
-                  title: "Burger",
-                  qty: 1,
-                  price: "15",
-                  color: Colors.deepOrange,
-                  image: images[1],
-                ),
-              ),
-              const SizedBox(height: 20.0),
-              OrderListItem(
-                product: CategoryProduct(
-                  title: "French Fries",
-                  qty: 1,
-                  price: "8",
-                  color: Colors.deepOrange,
-                  image: images[4],
-                ),
-              ),
-              const SizedBox(height: 20.0),
+              ...cartContent
+                  .map((e) => Column(
+                        children: [
+                          _buildProduct(e),
+                          const SizedBox(height: 20.0),
+                        ],
+                      ))
+                  .toList(),
               _buildDivider(),
               const SizedBox(height: 20.0),
-              Row(
-                children: [
-                  const SizedBox(width: 40.0),
-                  Text(
-                    "VAT (10%)",
-                    style: priceTextStyle,
-                  ),
-                  Spacer(),
-                  Text(
-                    "\$2",
-                    style: priceTextStyle,
-                  ),
-                  const SizedBox(width: 20.0),
-                ],
-              ),
-              const SizedBox(height: 20.0),
-              _buildDivider(),
-              const SizedBox(height: 10.0),
               Row(
                 children: [
                   const SizedBox(width: 40.0),
@@ -112,7 +93,7 @@ class MyOrderPage extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    "\$49",
+                    "\$$total",
                     style: priceTextStyle.copyWith(color: Colors.indigo),
                   ),
                   const SizedBox(width: 20.0),
@@ -129,13 +110,19 @@ class MyOrderPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15.0)),
                   color: Colors.yellow.shade700,
                   child: Text(
-                    "Next",
+                    "validez la commande".toUpperCase(),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                       fontSize: 18.0,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Livraison()),
+                    );
+                  },
                 ),
               ),
             ],
@@ -155,24 +142,8 @@ class MyOrderPage extends StatelessWidget {
       ),
     );
   }
-}
 
-class OrderItem {
-  final String title;
-  final int qty;
-  final double price;
-  final String image;
-  final Color bgColor;
-  OrderItem({this.title, this.qty, this.price, this.image, this.bgColor});
-}
-
-class OrderListItem extends StatelessWidget {
-  final CategoryProduct product;
-
-  const OrderListItem({Key key, this.product}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildProduct(product) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
@@ -182,12 +153,12 @@ class OrderListItem extends StatelessWidget {
             height: 100,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              color: product.color,
+              color: Colors.deepOrange,
               borderRadius: BorderRadius.circular(20.0),
             ),
-            child: product.image != null
+            child: product['image'] != null
                 ? Image.network(
-                    product.image,
+                    "http://192.168.1.3:8085/image/" + product['image'],
                     fit: BoxFit.cover,
                   )
                 : null,
@@ -199,7 +170,7 @@ class OrderListItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  product.title,
+                  product['name'],
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0,
@@ -223,10 +194,16 @@ class OrderListItem extends StatelessWidget {
                         iconSize: 18.0,
                         padding: const EdgeInsets.all(2.0),
                         icon: Icon(Icons.remove),
-                        onPressed: () {},
+                        onPressed: () {
+                          bloc.removeFromProduct(product);
+                          setState(() {
+                            calculTotal();
+                            cartContent = bloc.allItems;
+                          });
+                        },
                       ),
                       Text(
-                        "${product.qty}",
+                        "${product['quantite']}",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -237,7 +214,13 @@ class OrderListItem extends StatelessWidget {
                         iconSize: 18.0,
                         padding: const EdgeInsets.all(2.0),
                         icon: Icon(Icons.add),
-                        onPressed: () {},
+                        onPressed: () {
+                          bloc.addToCart(product);
+                          setState(() {
+                            calculTotal();
+                            cartContent = bloc.allItems;
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -246,10 +229,26 @@ class OrderListItem extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10.0),
-          Text(
-            "\$${product.price * product.qty}",
-            style: priceTextStyle,
-          ),
+          Column(
+            children: [
+              Text(
+                "\$${product['prix'] * product['quantite']}",
+                style: priceTextStyle,
+              ),
+              IconButton(
+                iconSize: 18.0,
+                padding: const EdgeInsets.all(2.0),
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  bloc.deletItem(product);
+                  setState(() {
+                    calculTotal();
+                    cartContent = bloc.allItems;
+                  });
+                },
+              ),
+            ],
+          )
         ],
       ),
     );
