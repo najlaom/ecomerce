@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductItem extends StatefulWidget {
   String nameCategory;
-  int idByCategory;
+  String idByCategory;
   var prdList;
   ProductItem({this.nameCategory, this.prdList, this.idByCategory});
 
@@ -23,6 +23,8 @@ class _ProductItemState extends State<ProductItem> {
   @override
   void initState() {
     super.initState();
+    print("this.widget.idByCategory");
+    print(this.widget.idByCategory);
     _fetchCategories();
   }
 
@@ -33,7 +35,7 @@ class _ProductItemState extends State<ProductItem> {
     if (prdByCat.length > 0) {
       setState(() {
         idByCategory = prdByCat;
-        idByCategory = idByCategory[0]['image'];
+        //idByCategory = idByCategory[0]['image'];
       });
       print(idByCategory.toString());
     } else {
@@ -105,6 +107,7 @@ class _ProductItemState extends State<ProductItem> {
                                         this.widget.idByCategory.toString(),
                                     nameCat:
                                         this.widget.nameCategory.toString(),
+                                prdList: this.widget.prdList
                                   )));
                     },
                     child: Row(

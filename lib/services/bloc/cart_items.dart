@@ -88,22 +88,19 @@ class CartItemsBloc {
 
       }
     }
-    // print("Qt: "+item.quantite.toString());
-    // allItems.remove(item);
   }
+
   void deletItem(item) {
     if (allItems.length > 0) {
       for (var i = 0; i < allItems.length; i++) {
         if (allItems[i] != null && allItems[i]["id"] == item["id"]) {
           allItems.removeAt(i);
           cartStreamController.sink.add(allItems);
-          emptyCart();
+          _saveCart();
           return;
         }
       }
     }
-    // print("Qt: "+item.quantite.toString());
-    // allItems.remove(item);
   }
   void dispose() {
     cartStreamController.close(); // close our StreamController
@@ -114,7 +111,7 @@ class CartItemsBloc {
         if (allItems[i] != null && allItems[i]["id"] == item["id"]) {
           allItems[i]["quantite"]--;
           if (allItems[i]["quantite"] <= 0) {
-            allItems.remove(item);
+            allItems.removeAt(i);
             break;
           }
         }

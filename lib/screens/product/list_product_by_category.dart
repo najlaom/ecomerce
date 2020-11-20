@@ -8,37 +8,43 @@ import 'package:flutter/material.dart';
 class listProductByCategory extends StatefulWidget{
   String idProductByCat;
   String nameCat;
-  listProductByCategory({this.idProductByCat, this.nameCat});
+  var prdList;
+  listProductByCategory({this.idProductByCat, this.nameCat, this.prdList});
   @override
   _listProductByCategoryState createState() => _listProductByCategoryState();
 }
 
 class _listProductByCategoryState extends State<listProductByCategory> {
+  var prdListByCat = [];
   @override
   void initState() {
     super.initState();
-    _fetchPrdByCat(widget.idProductByCat);
+    prdListByCat = this.widget.prdList;
+    // _fetchPrdByCat(widget.idProductByCat);
 
   }
-  var prdListByCat = [];
-  _fetchPrdByCat(String idCat) async {
-    print("_fetchPrdByCat");
-    var prdByCat = await ProductService().getProductsByCat(idCat);
-    print(prdByCat.toString());
-    if (prdByCat.length > 0) {
-      setState(() {
-        prdListByCat = prdByCat;
-        prdListByCat = prdListByCat[0]['name'];
-        print("xxxxxxxxxxxx");
-        print(prdListByCat);
-      });
-      print(prdListByCat.toString());
-    } else {
-      setState(() {
-        prdListByCat = [];
-      });
-    }
-  }
+
+  // _fetchPrdByCat(String idCat) async {
+  //   print("idCat");
+  //   print(idCat);
+  //   print("_fetchPrdByCat");
+  //   var prdByCat = await ProductService().getProductsByCat(idCat);
+  //   print("prdByCat.toString()");
+  //   print(prdByCat.toString());
+  //   if (prdByCat.length > 0) {
+  //     setState(() {
+  //       prdListByCat = prdByCat;
+  //       prdListByCat = prdListByCat[0]['name'];
+  //       print("xxxxxxxxxxxx");
+  //       print(prdListByCat);
+  //     });
+  //     print(prdListByCat.toString());
+  //   } else {
+  //     setState(() {
+  //       prdListByCat = [];
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
