@@ -158,7 +158,7 @@ class _AddProductState extends State<AddProduct> {
             ),
             child: product['image'] != null
                 ? Image.network(
-                    "http://192.168.1.3:8085/image/" + product['image'],
+                    "http://192.168.1.4:8085/image/" + product['image'],
                     fit: BoxFit.cover,
                   )
                 : null,

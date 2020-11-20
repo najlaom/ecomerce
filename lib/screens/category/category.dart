@@ -11,8 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Category extends StatefulWidget {
-  const Category({
-    Key key,
+   String nameCategory;
+   Category({
+    Key key, this.nameCategory
   }) : super(key: key);
   @override
   _CategoryState createState() => _CategoryState();
@@ -220,7 +221,7 @@ class _CategoryState extends State<Category> {
                                   Container(
                                     child: FlatButton(
                                       onPressed: () { Navigator.push(context,
-                                          MaterialPageRoute(builder: (_) => ListProduct()));},
+                                          MaterialPageRoute(builder: (_) => ListProduct(nameCategory: widget.nameCategory.toString(),)));},
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,

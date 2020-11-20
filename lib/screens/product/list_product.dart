@@ -24,13 +24,11 @@ class _ListProductState extends State<ListProduct> {
   @override
   void initState() {
     super.initState();
-    _fetchProducts();
-    _fetchCategories();
+   _fetchProducts();
   }
-  var productList = [];
-  var nameCategory ="";
-  var categoryList = [];
 
+
+  var productList = [];
   _fetchProducts() async {
     print("_fetchProducts");
     var products = await ProductService().getProducts();
@@ -51,29 +49,7 @@ class _ListProductState extends State<ListProduct> {
     }
   }
 
-  _fetchCategories() async {
-    print("_fetchCategories");
-    var categories = await CategoryService().getCategory();
-    print("categories.toString()");
-    print(categories.toString());
-    if (categories.length > 0) {
-      setState(() {
-        categoryList = categories;
-        nameCategory = categories[0]["name"].toString();
-      //  _fetchPrdByCat(categories[0]["id"].toString());
-        //fetch Products of firs Cat
-        // currentCat = cats[0]["id"];
-      });
 
-      print(categories.toString());
-      // _fetchcatProducts();
-    } else {
-      setState(() {
-        categoryList = [];
-        nameCategory ="";
-      });
-    }
-  }
 
 
 
@@ -87,7 +63,7 @@ class _ListProductState extends State<ListProduct> {
         //backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.black87,
-          title: Text(nameCategory),
+          title: Text(widget.nameCategory),
           actions: <Widget>[
             Container(
               width: 35,
@@ -206,9 +182,9 @@ class _ListProductState extends State<ListProduct> {
                       Container(
                           height: 130.0,
                           width: double.infinity,
-                          child: ("http://192.168.1.3:8085/image/" + productList[index]["image"] != null)
+                          child: ("http://192.168.1.4:8085/image/" + productList[index]["image"] != null)
                               ? Image.network(
-                            "http://192.168.1.3:8085/image/" + productList[index]["image"],
+                            "http://192.168.1.4:8085/image/" + productList[index]["image"],
                                   fit: BoxFit.cover,
                                 )
                               : null),
