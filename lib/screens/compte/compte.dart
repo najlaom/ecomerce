@@ -10,6 +10,8 @@ import 'package:logger/logger.dart';
 import 'package:ecomerce/services/NetworkHandler.dart';
 import 'dart:convert';
 
+import '../../main_navigation.dart';
+
 class Compte extends StatefulWidget {
   const Compte({
     Key key,
@@ -53,6 +55,9 @@ class _CompteState extends State<Compte> {
       var response = await networkHandler.getUser("api/users/getUserById",value);
       var user = response['user'];
       var prenom = user['prenom'];
+      prenom =capitalize(prenom);
+
+
      // var nom =user['moumen'];
       setState(() {
         bonjour= bonjour="Bonjour "+prenom+"!";
@@ -324,12 +329,10 @@ class _CompteState extends State<Compte> {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (_) => LoginPage()));
                                     }else{
-                                      await storage.write(key: "token", value:null);
-                                      setState(() {
-                                        bonjour="Bonjour!";
-                                        connected =false;
-                                        connecter="Connectez-vous";
-                                      });
+                                      showAlertDialog(context);
+
+
+
 
                                     }
 
@@ -349,7 +352,66 @@ class _CompteState extends State<Compte> {
             ),
           );
         });
+
   }
+  showAlertDialog(BuildContext context) {
+
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Continue"),
+      onPressed:  () async {
+       await disc();
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => MainNavigation(par: 2,)), (route) => false);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Confirmation de déconnexion"),
+      content: Text("Etes vous sur de vouloir quitter?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+  disc () async{
+    await storage.write(key: "token", value:null);
+    setState(() {
+      bonjour="Bonjour!";
+      connected =false;
+      connecter="Connectez-vous";
+
+    });
+
+  }
+  String capitalize(String string) {
+    if (string == null) {
+      throw ArgumentError.notNull('string');
+    }
+
+    if (string.isEmpty) {
+      return string;
+    }
+
+    return string[0].toUpperCase() + string.substring(1);
+  }
+
+
 
   Divider _buildDivider() {
     return Divider(
