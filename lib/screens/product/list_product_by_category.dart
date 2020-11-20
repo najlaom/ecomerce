@@ -8,19 +8,22 @@ import 'package:flutter/material.dart';
 class listProductByCategory extends StatefulWidget{
   String idProductByCat;
   String nameCat;
-  listProductByCategory({this.idProductByCat, this.nameCat});
+  var prdList;
+  listProductByCategory({this.idProductByCat, this.nameCat, this.prdList});
   @override
   _listProductByCategoryState createState() => _listProductByCategoryState();
 }
 
 class _listProductByCategoryState extends State<listProductByCategory> {
+  var prdListByCat = [];
   @override
   void initState() {
     super.initState();
-    _fetchPrdByCat(widget.idProductByCat);
+   // _fetchPrdByCat(widget.idProductByCat);
+    prdListByCat = this.widget.prdList;
 
   }
-  var prdListByCat = [];
+
   _fetchPrdByCat(String idCat) async {
     print("_fetchPrdByCat");
     var prdByCat = await ProductService().getProductsByCat(idCat);
@@ -161,9 +164,9 @@ class _listProductByCategoryState extends State<listProductByCategory> {
                       Container(
                           height: 130.0,
                           width: double.infinity,
-                          child: ("http://10.0.2.2:8080/image/" + prdListByCat[index]['image']!= null)
+                          child: ("http://192.168.1.4:8085/image/" + prdListByCat[index]['image']!= null)
                               ? Image.network(
-                            "http://10.0.2.2:8080/image/" + prdListByCat[index]['image'],
+                            "http://192.168.1.4:8085/image/" + prdListByCat[index]['image'],
                             fit: BoxFit.cover,
                           )
                               : null),

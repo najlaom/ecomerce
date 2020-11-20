@@ -105,6 +105,7 @@ class _ProductItemState extends State<ProductItem> {
                                         this.widget.idByCategory.toString(),
                                     nameCat:
                                         this.widget.nameCategory.toString(),
+                                prdList: this.widget.prdList
                                   )));
                     },
                     child: Row(
