@@ -38,7 +38,9 @@ dependencies:
   logger: ^0.9.4
   flutter_secure_storage: ^3.3.5
   shared_preferences: ^0.5.8
+  strings: ^0.1.2
   flutter_local_notifications: ^1.4.4+2
+
 
 
 dev_dependencies:
