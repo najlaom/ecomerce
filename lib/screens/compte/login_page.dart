@@ -141,6 +141,17 @@ class _LoginPageState extends State<LoginPage> {
                             log.i(output);
                             print(output['token']);
                             await storage.write(key: "token", value: output['token']);
+
+                            var res = await networkHandler.postToken("api/paniers/new", output['token']);
+                            if(res.statusCode == 200||res.statusCode == 201){
+                              Map<String,dynamic> panier = json.decode(res.body);
+                              log.i(panier['token']);
+                              await storage.write(key: "tokenPan", value: panier['token']);
+
+                            }
+
+
+
                             /*  Navigator.push(
                                 context, MaterialPageRoute(builder: (_) => Compte())); */
 

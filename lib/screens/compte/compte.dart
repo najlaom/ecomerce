@@ -246,6 +246,8 @@ class _CompteState extends State<Compte> {
                                     String value =
                                         await storage.read(key: "token");
                                     print(value);
+                                    String v = await storage.read(key: "tokenPan");
+                                    print(v);
                                   },
                                   child: Row(
                                     children: [
@@ -391,6 +393,7 @@ class _CompteState extends State<Compte> {
   }
   disc () async{
     await storage.write(key: "token", value:null);
+    await storage.write(key: "tokenPan", value: null);
     setState(() {
       bonjour="Bonjour!";
       connected =false;
