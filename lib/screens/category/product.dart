@@ -80,11 +80,10 @@ class _ProductState extends State<Product> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                        color: Colors.red,
                         //width: 200,
                         child: (this.widget.prdList[index]['image'] != null)
                             ? Image.network(
-                         "http://192.168.1.3:8085/image/"+this.widget.prdList[index]['image'],
+                         "http://192.168.1.4:8085/image/"+this.widget.prdList[index]['image'],
                                 width: 50,
                                 height: 50,
                               )

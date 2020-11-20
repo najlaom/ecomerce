@@ -41,6 +41,7 @@ class _HomeProductPromoState extends State<HomeProductPromo> {
   Widget build(BuildContext context) {
     return Container(
       height: 200,
+      padding: EdgeInsets.only(top: 20),
       child: GridView.count(
         crossAxisCount: 2,
         physics: NeverScrollableScrollPhysics(),
@@ -55,11 +56,12 @@ class _HomeProductPromoState extends State<HomeProductPromo> {
                 child: Stack(
                   overflow: Overflow.visible,
                   children: [
-                    PNetworkImage(
-                      "http://192.168.1.3:8085/image/" +
+                    Positioned(
+                      child: PNetworkImage(
+                      "http://192.168.1.4:8085/image/" +
                           productList[index]["image"],
                       height: 150,
-                    ),
+                    ),),
                     Positioned(
                       bottom: 50,
                       right: 30,

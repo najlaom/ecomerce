@@ -194,9 +194,9 @@ class _ListProductByCategoryState extends State<ListProductByCategory> {
                      Container(
                          height: 130.0,
                          width: double.infinity,
-                         child: ("http://192.168.1.3:8085/image/" + prdList[index]["image"] != null)
+                         child: ("http://192.168.1.4:8085/image/" + prdList[index]["image"] != null)
                              ? Image.network(
-                           "http://192.168.1.3:8085/image/" + prdList[index]["image"],
+                           "http://192.168.1.4:8085/image/" + prdList[index]["image"],
                            fit: BoxFit.cover,
                          )
                              : null),

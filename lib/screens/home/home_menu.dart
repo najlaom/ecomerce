@@ -12,7 +12,7 @@ class _HomeMenuState extends State<HomeMenu> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180,
+      height: 190,
       child: GridView.count(
         crossAxisCount: 4,
         physics: NeverScrollableScrollPhysics(),

@@ -312,7 +312,7 @@ class _DetailsProductState extends State<DetailsProduct> {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   child: PNetworkImage(
-                    "http://192.168.1.3:8085/image/" + product["image"],
+                    "http://192.168.1.4:8085/image/" + product["image"],
                     height: 150,
                   ),
                 ),
