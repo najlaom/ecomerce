@@ -1,20 +1,23 @@
+import 'package:ecomerce/services/NetworkHandler.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Livraison extends StatefulWidget {
   @override
   _LivraisonState createState() => _LivraisonState();
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _LivraisonState createState() => new _LivraisonState();
-}
+
 
 //State is information of the application that can change over time or when some actions are taken.
 class _LivraisonState extends State<Livraison> {
   List picked = [false, false];
 
   int totalAmount = 0;
+  final storage = new FlutterSecureStorage();
+  bool loading = true;
+  NetworkHandler networkHandler = NetworkHandler();
+  var user;
 
   pickToggle(index) {
     setState(() {
@@ -35,6 +38,35 @@ class _LivraisonState extends State<Livraison> {
         });
       }
     }
+  }
+  void _loadData() async{
+
+    String value = await storage.read(key: "token");
+    String v = await storage.read(key: "tokenPan");
+    var response = await networkHandler.getUser("api/users/getUserById",value);
+    setState(() {
+      user = response['user'];
+
+    });
+    print(user);
+
+
+
+    await Future.delayed(const Duration(seconds: 5));
+    setState(() {
+      loading = false;
+    });
+
+
+
+
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _loadData();
+    super.initState();
   }
 
   @override
@@ -108,7 +140,12 @@ class _LivraisonState extends State<Livraison> {
               color: Colors.white, borderRadius: BorderRadius.circular(10.0)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text("nom"), Text("addresse"), Text("num telephone")],
+
+            children: [Text("Client: "+user['prenom']+" "+user['nom']),
+              Text("Adresse: "+user['adress']+" "+user['region']+" "+user['ville']),
+              Text("Télephone: "+user['phone'].toString()+"/"+user['phone'].toString())
+
+            ],
           ),
         ),
       ),

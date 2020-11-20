@@ -33,7 +33,7 @@ class _ProductItemState extends State<ProductItem> {
     if (prdByCat.length > 0) {
       setState(() {
         idByCategory = prdByCat;
-        idByCategory = idByCategory[0]['image'];
+       // idByCategory = idByCategory[0]['image'];
       });
       print(idByCategory.toString());
     } else {

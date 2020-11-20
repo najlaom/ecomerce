@@ -1,10 +1,12 @@
 import 'package:ecomerce/models/model.dart';
 import 'package:ecomerce/screens/commande/livraison.dart';
+import 'package:ecomerce/screens/compte/login_page.dart';
 import 'package:ecomerce/services/bloc/cart_items.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecomerce/components/assets.dart';
 import 'package:ecomerce/components/colors.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 final priceTextStyle = TextStyle(
   color: Colors.grey.shade600,
@@ -23,12 +25,37 @@ class AddProduct extends StatefulWidget {
 class _AddProductState extends State<AddProduct> {
   List cartContent = [];
   double total = 0;
+  bool loading = true;
+  final storage = new FlutterSecureStorage();
+  bool connected =false ;
+
+  void _loadData() async{
+    String value =  await storage.read(key: "token");
+    if(value == null){
+      setState(() {
+        connected = false;
+      });
+
+    }else{
+      setState(() {
+        connected = true;
+      });
+
+    }
+    await Future.delayed(const Duration(seconds: 5));
+    setState(() {
+      loading = false;
+    });
+
+
+  }
 
   @override
   void initState() {
     super.initState();
     cartContent = bloc.allItems;
     calculTotal();
+    _loadData();
   }
 
   calculTotal() {
@@ -118,10 +145,17 @@ class _AddProductState extends State<AddProduct> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Livraison()),
-                    );
+                    if(connected){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Livraison()),
+                      );
+
+                    }else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => LoginPage()));
+                    }
+
                   },
                 ),
               ),
@@ -158,7 +192,7 @@ class _AddProductState extends State<AddProduct> {
             ),
             child: product['image'] != null
                 ? Image.network(
-                    "http://192.168.1.4:8085/image/" + product['image'],
+                    "http://10.0.2.2:8080/image/" + product['image'],
                     fit: BoxFit.cover,
                   )
                 : null,
