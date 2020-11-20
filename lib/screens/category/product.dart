@@ -1,4 +1,5 @@
 import 'package:ecomerce/screens/product/detail_product.dart';
+import 'package:ecomerce/services/category_service.dart';
 import 'package:ecomerce/services/product_service.dart';
 import 'package:ecomerce/widgets/network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,13 +12,16 @@ class Product extends StatefulWidget {
   _ProductState createState() => _ProductState();
 }
 class _ProductState extends State<Product> {
+
   @override
   void initState() {
     super.initState();
     _fetchProducts();
+    _fetchCategories();
   }
   var productList = [];
-
+  var categoryList = [];
+  String nameCategory = "";
   _fetchProducts() async {
     print("_fetchProducts");
     var products = await ProductService().getProducts();
@@ -37,25 +41,29 @@ class _ProductState extends State<Product> {
       });
     }
   }
+  _fetchCategories() async {
+    print("_fetchCategories");
+    var categories = await CategoryService().getCategory();
+    print("categories.toString()");
+    print(categories.toString());
+    if (categories.length > 0) {
+      setState(() {
+        categoryList = categories;
+        nameCategory = categories[0]["name"].toString();
+       // _fetchPrdByCat(categories[0]["id"].toString());
+        //fetch Products of firs Cat
+        // currentCat = cats[0]["id"];
+      });
 
-  // _fetchProducts() async {
-  //   print("_fetchProducts");
-  //   var products = await ProductService().getProducts();
-  //   print(products.toString());
-  //   if (products.length > 0) {
-  //     setState(() {
-  //       productList = products;
-  //       //fetch Products of firs Cat
-  //       // currentCat = cats[0]["id"];
-  //     });
-  //     print(products.toString());
-  //     // _fetchcatProducts();
-  //   } else {
-  //     setState(() {
-  //       productList = [];
-  //     });
-  //   }
-  // }
+      print(categories.toString());
+      //_fetchcatProducts();
+    } else {
+      setState(() {
+        categoryList = [];
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -84,7 +92,7 @@ class _ProductState extends State<Product> {
                         //width: 200,
                         child: (this.widget.prdList[index]['image'] != null)
                             ? Image.network(
-                         "http://192.168.1.3:8085/image/"+this.widget.prdList[index]['image'],
+                         "http://192.168.1.4:8085/image/"+this.widget.prdList[index]['image'],
                                 width: 50,
                                 height: 50,
                               )
