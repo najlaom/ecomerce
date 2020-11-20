@@ -1,4 +1,5 @@
 import 'package:ecomerce/screens/compte/login_page.dart';
+import 'package:ecomerce/screens/compte/prof.dart';
 import 'package:ecomerce/screens/product/add_product.dart';
 import 'package:ecomerce/services/bloc/cart_items.dart';
 import 'package:flutter/cupertino.dart';
@@ -152,7 +153,7 @@ class _CompteState extends State<Compte> {
                             children: <Widget>[
                               Container(
                                 padding: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 10),
+                                    left: 20, right: 20, bottom: 20,top: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -164,7 +165,7 @@ class _CompteState extends State<Compte> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18.0,
                                           height: 1.5,
-                                          color: Colors.white),
+                                          color: Colors.orangeAccent),
                                     ),
                                     connected ?Row(
                                       children: [
@@ -232,6 +233,7 @@ class _CompteState extends State<Compte> {
                               SizedBox(
                                 height: 20.0,
                               ),
+                              Divider(),
                               Container(
                                 child: FlatButton(
                                   padding: EdgeInsets.all(8.0),
@@ -243,12 +245,12 @@ class _CompteState extends State<Compte> {
                                   child: Row(
                                     children: [
                                       Icon(
-                                        Icons.location_on,
+                                        Icons.card_giftcard ,
                                         color: Theme.of(context).primaryColor,
                                       ),
                                       VerticalDivider(),
                                       Text(
-                                        "Get Token",
+                                        "Mes Commandes",
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           fontFamily: 'JosefinSans',
@@ -261,55 +263,7 @@ class _CompteState extends State<Compte> {
                                 ),
                               ),
                               Divider(),
-                              Container(
-                                child: FlatButton(
-                                  padding: EdgeInsets.all(8.0),
-                                  onPressed: () {},
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      VerticalDivider(),
-                                      Text(
-                                        "Flat Button",
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                          fontFamily: 'JosefinSans',
-                                          fontWeight: FontWeight.w400,
-                                          height: 1.5,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Divider(),
-                              Container(
-                                child: FlatButton(
-                                  padding: EdgeInsets.all(8.0),
-                                  onPressed: () {},
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      VerticalDivider(),
-                                      Text(
-                                        "Flat Button",
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                          fontFamily: 'JosefinSans',
-                                          fontWeight: FontWeight.w400,
-                                          height: 1.5,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+
                               Container(
                                 alignment: Alignment.centerLeft,
                                 padding: EdgeInsets.only(left: 20.0),
@@ -320,19 +274,29 @@ class _CompteState extends State<Compte> {
                                 ),
                                 child: Text("Mes Paramétres"),
                               ),
+                              Divider(),
                               Container(
                                 child: FlatButton(
                                   padding: EdgeInsets.all(8.0),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if(!connected){
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (_) => LoginPage()));
+
+                                    }else{
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (_) =>Prof()));
+                                    }
+                                  },
                                   child: Row(
                                     children: [
                                       Icon(
-                                        Icons.location_on,
+                                        Icons.person,
                                         color: Theme.of(context).primaryColor,
                                       ),
                                       VerticalDivider(),
                                       Text(
-                                        "Flat Button",
+                                        "Profile",
                                         style: TextStyle(
                                           fontSize: 20.0,
                                           fontFamily: 'JosefinSans',
@@ -345,30 +309,6 @@ class _CompteState extends State<Compte> {
                                 ),
                               ),
                               Divider(),
-                              Container(
-                                child: FlatButton(
-                                  padding: EdgeInsets.all(8.0),
-                                  onPressed: () {},
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                      VerticalDivider(),
-                                      Text(
-                                        "Flat Button",
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                          fontFamily: 'JosefinSans',
-                                          fontWeight: FontWeight.w400,
-                                          height: 1.5,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
                               Container(
                                 alignment: Alignment.topCenter,
                                 padding: EdgeInsets.only(left: 20.0),

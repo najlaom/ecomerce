@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ProductService {
-  String baseurl ="http://192.168.1.4:8085/";
+  String baseurl ="http://10.0.2.2:8080/";
   static int idByCat;
   Future getProducts() async {
     //najlaaa
