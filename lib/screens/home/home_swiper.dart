@@ -14,6 +14,7 @@ class _HomeSwiperState extends State<HomeSwiper> {
     super.initState();
     _fetchProducts();
   }
+
   var productList = [];
 
   _fetchProducts() async {
@@ -36,8 +37,6 @@ class _HomeSwiperState extends State<HomeSwiper> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -49,8 +48,19 @@ class _HomeSwiperState extends State<HomeSwiper> {
           viewportFraction: 0.5,
           autoplay: true,
           itemBuilder: (BuildContext context, int index) {
-            return Image.network(
-              "http://192.168.1.4:8085/image/"+productList[index]["image"],
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(3),
+                border: Border.all(
+                  color: Colors.orange.shade700,
+                  width: 1,
+                ),
+              ),
+
+              child: Image.network(
+                  "http://192.168.1.4:8085/image/" +
+                      productList[index]["image"],
+                  fit: BoxFit.fill),
             );
           },
           itemCount: productList.length,

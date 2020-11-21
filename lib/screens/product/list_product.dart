@@ -206,6 +206,12 @@ class _ListProductState extends State<ListProduct> {
                       Container(
                           height: 130.0,
                           width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(0),
+                            border: Border.all(
+
+                            ),
+                          ),
                           child: ("http://192.168.1.4:8085/image/" + productList[index]["image"] != null)
                               ? Image.network(
                             "http://192.168.1.4:8085/image/" + productList[index]["image"],

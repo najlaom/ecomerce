@@ -64,8 +64,7 @@ class _HomeState extends State<Home> {
                           VerticalDivider(),
                           Expanded(
                             child: Text(
-                              'Recherche sur moll + ' +
-                                  bloc.allItems.length.toString(),
+                              'Recherche sur moll ' ,
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2
@@ -126,7 +125,7 @@ class _HomeState extends State<Home> {
                     : SafeArea(
                         child: ListView.builder(
                         itemBuilder: _buildListView,
-                        itemCount: 10,
+                        itemCount: 20,
                       )),
               ),
             ),

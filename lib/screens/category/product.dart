@@ -68,7 +68,7 @@ class _ProductState extends State<Product> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 3.0),
-      height: 500,
+      height: 800,
       child: GridView.count(
         crossAxisCount: 3,
         children: List.generate(this.widget.prdList.length, (index) {
@@ -88,6 +88,12 @@ class _ProductState extends State<Product> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(0),
+                          border: Border.all(
+
+                          ),
+                        ),
                         child: (this.widget.prdList[index]['image'] != null)
                             ? Image.network(
                          "http://192.168.1.4:8085/image/"+this.widget.prdList[index]['image'],

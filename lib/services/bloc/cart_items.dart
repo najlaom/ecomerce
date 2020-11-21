@@ -97,7 +97,7 @@ class CartItemsBloc {
         if (allItems[i] != null && allItems[i]["id"] == item["id"]) {
           allItems.removeAt(i);
           cartStreamController.sink.add(allItems);
-          emptyCart();
+          _saveCart();
           return;
         }
       }

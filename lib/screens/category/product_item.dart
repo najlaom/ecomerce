@@ -54,12 +54,11 @@ class _ProductItemState extends State<ProductItem> {
         categoryList = categories;
         nameCategory = categories[0]["name"].toString();
         _fetchPrdByCat(categories[0]["id"].toString());
-        //fetch Products of firs Cat
-        // currentCat = cats[0]["id"];
+
       });
 
       print(categories.toString());
-      //_fetchcatProducts();
+
     } else {
       setState(() {
         categoryList = [];

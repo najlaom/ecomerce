@@ -11,10 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Category extends StatefulWidget {
-   String nameCategory;
-   Category({
-    Key key, this.nameCategory
-  }) : super(key: key);
+  String nameCategory;
+  Category({Key key, this.nameCategory}) : super(key: key);
   @override
   _CategoryState createState() => _CategoryState();
 }
@@ -88,17 +86,14 @@ class _CategoryState extends State<Category> {
             appBar: AppBar(
               backgroundColor: Colors.black87,
               title: GestureDetector(
-                onTap: () {
-
-
-                },
+                onTap: () {},
                 child: Container(
                   decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8),
+                    ),
                   ),
-                ),
                   child: Padding(
                     padding: EdgeInsets.all(10),
                     child: IntrinsicHeight(
@@ -112,8 +107,7 @@ class _CategoryState extends State<Category> {
                           VerticalDivider(),
                           Expanded(
                             child: Text(
-                              'Recherche sur moll' +
-                                  bloc.allItems.length.toString(),
+                              'Recherche sur moll',
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2
@@ -188,10 +182,10 @@ class _CategoryState extends State<Category> {
                                           print(categoryList[index]['name']);
                                           setState(() {
                                             nameCategory = categoryList[index]
-                                            ['name']
+                                                    ['name']
                                                 .toString();
                                             _fetchPrdByCat(categoryList[index]
-                                            ['id']
+                                                    ['id']
                                                 .toString());
                                           });
                                         },
@@ -223,8 +217,16 @@ class _CategoryState extends State<Category> {
                                   ),
                                   Container(
                                     child: FlatButton(
-                                      onPressed: () { Navigator.push(context,
-                                          MaterialPageRoute(builder: (_) => ListProduct(nameCategory: widget.nameCategory.toString(),)));},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) => ListProduct(
+                                                      nameCategory: widget
+                                                          .nameCategory
+                                                          .toString(),
+                                                    )));
+                                      },
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,

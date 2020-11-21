@@ -27,7 +27,7 @@ class _HomeProductPromoState extends State<HomeProductPromo> {
         //fetch Products of firs Cat
         // currentCat = cats[0]["id"];
       });
-      print("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+      print("ffffffffffffffffffffffff");
       print(productList.toString());
       // _fetchcatProducts();
     } else {
@@ -40,8 +40,10 @@ class _HomeProductPromoState extends State<HomeProductPromo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      padding: EdgeInsets.only(top :20.0, left: 10.0, right: 10.0),
+      height: 500,
       child: GridView.count(
+        scrollDirection: Axis.vertical,
         crossAxisCount: 2,
         physics: NeverScrollableScrollPhysics(),
         children: List.generate(productList.length, (index) {
@@ -58,7 +60,7 @@ class _HomeProductPromoState extends State<HomeProductPromo> {
                     PNetworkImage(
                       "http://192.168.1.4:8085/image/" +
                           productList[index]["image"],
-                      height: 150,
+                      height: 100,
                     ),
                     Positioned(
                       bottom: 50,
@@ -81,7 +83,7 @@ class _HomeProductPromoState extends State<HomeProductPromo> {
                       right: 10,
                      child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
+                          color: Colors.orange.shade300,
                         ),
                         alignment: Alignment.center,
                         width: 35,
