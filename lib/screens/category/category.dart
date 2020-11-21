@@ -88,14 +88,17 @@ class _CategoryState extends State<Category> {
             appBar: AppBar(
               backgroundColor: Colors.black87,
               title: GestureDetector(
-                onTap: () {},
+                onTap: () {
+
+
+                },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8),
-                    ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
                   ),
+                ),
                   child: Padding(
                     padding: EdgeInsets.all(10),
                     child: IntrinsicHeight(

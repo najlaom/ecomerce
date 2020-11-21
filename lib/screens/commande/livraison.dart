@@ -1,6 +1,12 @@
 import 'package:ecomerce/services/NetworkHandler.dart';
+import 'package:ecomerce/services/bloc/cart_items.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'dart:convert';
+
+import 'package:logger/logger.dart';
+
+import '../../main_navigation.dart';
 
 class Livraison extends StatefulWidget {
   @override
@@ -18,6 +24,7 @@ class _LivraisonState extends State<Livraison> {
   bool loading = true;
   NetworkHandler networkHandler = NetworkHandler();
   var user;
+  var log = Logger();
 
   pickToggle(index) {
     setState(() {
@@ -129,7 +136,43 @@ class _LivraisonState extends State<Livraison> {
                     fontSize: 18.0,
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
+              var all= bloc.allItems;
+              //    print(all);
+                  for(var i = 0; i < all.length; i++){
+                  print(all[i]['quantite'])  ;
+                 await addProduct(all[i]['quantite'].toString(), all[i]['id'].toString());
+
+
+                  }
+
+              Map<String,int>data={
+                "modeLiv":1,
+                "modePay":1
+              };
+              String v = await storage.read(key: "tokenPan");
+              var response = await networkHandler.ConfirmCommande("api/paniers/confiermCommande", data, v);
+                if(response.statusCode == 200||response.statusCode == 201){
+                  bloc.emptyCart();
+                  Map<String,dynamic> output = json.decode(response.body);
+                  log.i(output['token']);
+                  await storage.write(key: "tokenPan", value: output['token']);
+
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => MainNavigation(par: 0,)), (route) => false);
+
+
+
+                }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -309,5 +352,28 @@ class _LivraisonState extends State<Livraison> {
                   )))),
     );
   }
+
+  addProduct(String quantite,String id)async{
+    Map<String,String>data={
+      "quantite":quantite
+    };
+    
+    String v = await storage.read(key: "tokenPan");
+
+    await networkHandler.addProduct("api/paniers/addProduct/"+id, data, v);
+
+
+  }
+  /*
+  confirmComande(String modeLiv,String modePay)async{
+    Map<String,String>data={
+      "modeLiv":modeLiv,
+      "modePay":modePay
+    };
+    String v = await storage.read(key: "tokenPan");
+   var response = await networkHandler.ConfirmCommande("api/paniers/confiermCommande", data, v);
+   return response;
+
+  } */
 }
 
