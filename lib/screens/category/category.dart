@@ -88,7 +88,9 @@ class _CategoryState extends State<Category> {
             appBar: AppBar(
               backgroundColor: Colors.black87,
               title: GestureDetector(
-                onTap: () {},
+                onTap: () {
+
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -109,8 +111,7 @@ class _CategoryState extends State<Category> {
                           VerticalDivider(),
                           Expanded(
                             child: Text(
-                              'Recherche sur moll' +
-                                  bloc.allItems.length.toString(),
+                              'Recherche sur moll' ,
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2
