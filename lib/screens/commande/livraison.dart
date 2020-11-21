@@ -110,15 +110,32 @@ class _LivraisonState extends State<Livraison> {
                   ],
                 )),
             itemCardInfo(),
-             Column(
-              children: <Widget>[
-                itemCard('Livraison standar', 'gray',
-                    true, 0),
-                itemCard('Livraison Total', 'gray',
-                    true, 1),
-              ],
-            ),
             itemCardLiv(),
+            Container(
+              padding: EdgeInsets.only(left: 15.0, right: 10.0),
+              width: MediaQuery.of(context).size.width - 20.0,
+              height: 50,
+              child: RaisedButton(
+                padding: const EdgeInsets.all(16.0),
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0)),
+                color: Colors.yellow.shade700,
+                child: Text(
+                  "Passer Commande".toUpperCase(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 18.0,
+                  ),
+                ),
+                onPressed: () {
+
+
+
+                },
+              ),
+            ),
           ],
         ),
       ),
