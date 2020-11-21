@@ -24,11 +24,13 @@ class _ListProductState extends State<ListProduct> {
   @override
   void initState() {
     super.initState();
-   _fetchProducts();
+    _fetchProducts();
+    _fetchCategories();
   }
-
-
   var productList = [];
+  var nameCategory ="";
+  var categoryList = [];
+
   _fetchProducts() async {
     print("_fetchProducts");
     var products = await ProductService().getProducts();
@@ -49,82 +51,104 @@ class _ListProductState extends State<ListProduct> {
     }
   }
 
+  _fetchCategories() async {
+    print("_fetchCategories");
+    var categories = await CategoryService().getCategory();
+    print("categories.toString()");
+    print(categories.toString());
+    if (categories.length > 0) {
+      setState(() {
+        categoryList = categories;
+        nameCategory = categories[0]["name"].toString();
+        //  _fetchPrdByCat(categories[0]["id"].toString());
+        //fetch Products of firs Cat
+        // currentCat = cats[0]["id"];
+      });
 
+      print(categories.toString());
+      // _fetchcatProducts();
+    } else {
+      setState(() {
+        categoryList = [];
+        nameCategory ="";
+      });
+    }
+  }
 
 
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      initialData: bloc.allItems,
+        initialData: bloc.allItems,
         stream: bloc.getStream,
         builder: (context, snapshot){
-      return Scaffold(
-        //backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.black87,
-          title: Text(widget.nameCategory),
-          actions: <Widget>[
-            Container(
-              width: 35,
-              child: Center(
-                child: IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
-                    onPressed: null),
-              ),
-            ),
-            Container(
-              width: 35,
-              child: Center(
-                child: Stack(
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.shopping_cart_outlined,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddProduct()),
-                        );
-                      },
-                    ),
-                    bloc.allItems.length > 0
-                    ? Positioned(
-                        right: 15,
-                        top: -3,
-                        child: Container(
-                          decoration: new BoxDecoration(
-                            color: Colors.orange.shade700,
-                            shape: BoxShape.circle,
-                          ),
-                          padding: EdgeInsets.all(5.0),
-                          child: Text(
-                            bloc.allItems.length.toString(),
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white)
-                          ),
-                        )): Container()
-                  ],
+          return Scaffold(
+            //backgroundColor: Colors.white,
+            appBar: AppBar(
+              backgroundColor: Colors.black87,
+              title: Text(nameCategory),
+              actions: <Widget>[
+                Container(
+                  width: 35,
+                  child: Center(
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                        onPressed: null),
+                  ),
                 ),
-              ),
-            )
-          ],
-        ),
-        body: CustomScrollView(
-          slivers: <Widget>[
-            _buildAppBar(context),
-            _buildListProduct(),
-          ],
-        ),
-      );
-    });
+                Container(
+                  width: 35,
+                  child: Center(
+                    child: Stack(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.shopping_cart_outlined,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddProduct()),
+                            );
+                          },
+                        ),
+                        bloc.allItems.length > 0
+                            ? Positioned(
+                            right: 15,
+                            top: -3,
+                            child: Container(
+                              decoration: new BoxDecoration(
+                                color: Colors.orange.shade700,
+                                shape: BoxShape.circle,
+                              ),
+                              padding: EdgeInsets.all(5.0),
+                              child: Text(
+                                  bloc.allItems.length.toString(),
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white)
+                              ),
+                            )): Container()
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            body: CustomScrollView(
+              slivers: <Widget>[
+                _buildAppBar(context),
+                _buildListProduct(),
+              ],
+            ),
+          );
+        });
   }
 
   SliverAppBar _buildAppBar(BuildContext context) {
@@ -160,7 +184,7 @@ class _ListProductState extends State<ListProduct> {
   SliverGrid _buildListProduct() {
     return SliverGrid(
       gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
         return Container(
             padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
@@ -182,11 +206,11 @@ class _ListProductState extends State<ListProduct> {
                       Container(
                           height: 130.0,
                           width: double.infinity,
-                          child: ("http://10.0.2.2:8080/image/" + productList[index]["image"] != null)
+                          child: ("http://192.168.1.4:8085/image/" + productList[index]["image"] != null)
                               ? Image.network(
-                            "http://10.0.2.2:8080/image/" + productList[index]["image"],
-                                  fit: BoxFit.cover,
-                                )
+                            "http://192.168.1.4:8085/image/" + productList[index]["image"],
+                            fit: BoxFit.cover,
+                          )
                               : null),
                       SizedBox(
                         height: 10.0,

@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 class NetworkHandler
 
 {
-  String baseurl ="http://10.0.2.2:8080/";
+  String baseurl ="http://192.168.1.4:8085/";
   var log = Logger();
   Future get(String url) async {
     url =formater(url);
